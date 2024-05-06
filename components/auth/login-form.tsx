@@ -20,6 +20,7 @@ import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
 import { login } from "@/actions/login";
 import { useState, useTransition } from "react";
+import Link from "next/link";
 
 export const LoginForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -48,6 +49,7 @@ export const LoginForm = () => {
           //     form.reset();
           //     setSuccess(data.success);
           //   }
+          form.resetField("password");
           setError(data?.error);
           setSuccess(data?.success);
         })
@@ -98,13 +100,21 @@ export const LoginForm = () => {
                     />
                   </FormControl>
                   <FormMessage />
+                  <Button
+                    size="sm"
+                    variant="link"
+                    asChild
+                    className="px-0 font-normal"
+                  >
+                    <Link href="/auth/reset">Forgot password?</Link>
+                  </Button>
                 </FormItem>
               )}
             />
           </div>
           <FormError message={error} />
           <FormSuccess message={success} />
-          <Button className="w-full" type="submit">
+          <Button className="w-full" type="submit" disabled={isPending}>
             Submit
           </Button>
         </form>

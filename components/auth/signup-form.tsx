@@ -41,6 +41,7 @@ export const SignupForm = () => {
 
     startTransition(() => {
       signup(values).then((data) => {
+        form.resetField("password");
         setError(data.error);
         setSuccess(data.success);
       });
