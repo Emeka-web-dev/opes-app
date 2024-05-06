@@ -38,18 +38,16 @@ export const NewVerificationForm = () => {
   }, [onClick]);
 
   return (
-    <div>
-      <CardWrapper
-        backButtonHref="/auth/login"
-        backButtonLabel="Back to login"
-        headerLabel="Confirming your information"
-      >
-        <div className="w-full flex items-center justify-center">
-          {!error && !succes && <DotLoader color={setColor} />}
-          <FormError message={error} />
-          <FormSuccess message={succes} />
-        </div>
-      </CardWrapper>
-    </div>
+    <CardWrapper
+      backButtonHref="/auth/login"
+      backButtonLabel="Back to login"
+      headerLabel="Confirming your information"
+    >
+      <div className="w-full flex items-center justify-center">
+        {!error && !succes && <DotLoader color={setColor} />}
+        <FormError message={error} />
+        <FormSuccess message={succes} />
+      </div>
+    </CardWrapper>
   );
 };

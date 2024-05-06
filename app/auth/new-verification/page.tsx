@@ -1,11 +1,12 @@
+"use client";
 import { NewVerificationForm } from "@/components/auth/new-verification-form";
-import React from "react";
+import React, { Suspense } from "react";
 
 const NewVerificationPage = () => {
   return (
-    <div>
+    <Suspense fallback={<p>Loading</p>}>
       <NewVerificationForm />
-    </div>
+    </Suspense>
   );
 };
 
