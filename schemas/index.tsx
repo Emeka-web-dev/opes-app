@@ -40,7 +40,4 @@ export const NewPasswordSchema = z.object({
   password: z.string().min(6, {
     message: "Minimum of 6 characters required",
   }),
-  //   confirmPassword: z.string().min(6, {
-  //     message: "Minimum of 6 characters required",
-  //   }),
 });

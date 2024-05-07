@@ -37,6 +37,23 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   };
   try {
     const info = await transporter.sendMail(mailOptions);
+    console.log(info.response);
+    return { success: "Email sent!" };
+  } catch (error) {
+    console.error("Error occurred:", error);
+    return { error: "Email not sent!" };
+  }
+};
+
+export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
+  const mailOptions = {
+    from: `Opes Tech <${process.env.BREVO_USER}>`,
+    to: email,
+    subject: "2FA Code",
+    html: `<p>Your 2FA Code: ${token}</p>`,
+  };
+  try {
+    const info = await transporter.sendMail(mailOptions);
     console.log("Email sent:", info.response);
   } catch (error) {
     console.error("Error occurred:", error);
