@@ -8,9 +8,9 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="scroll-smooth">
       <NavigationItems />
-      <div className="mt-[4.5rem]">
+      <div className="pt-[4.5rem]">
         <section className="max-w-7xl mx-auto">
           <Banner />
         </section>

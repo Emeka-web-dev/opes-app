@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(inter.className, "dark:bg-[#1d2144]")}>
+      <body className={cn(inter.className, "dark:bg-[#1d2144] scroll-smooth")}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
