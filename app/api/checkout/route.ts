@@ -30,9 +30,7 @@ export async function GET(req: Request) {
       metadata: {
         userId: user?.id,
         tier: Tier.BASIC,
-        cancel_action: `${process.env.NEXT_PUBLIC_BASE_URL!}/${
-          purchase ? "success" : "checkout"
-        }`,
+        cancel_action: `${process.env.BASE_URL!}/checkout`,
       },
     };
 
