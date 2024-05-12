@@ -1,10 +1,6 @@
-import { logout } from "@/actions/logout";
 import Checkout from "@/components/checkout";
-import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { purchase } from "@/lib/auth";
-import axios from "axios";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
   const userPurchase = await purchase();

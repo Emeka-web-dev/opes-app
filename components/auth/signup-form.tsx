@@ -20,6 +20,7 @@ import { FormSuccess } from "../form-success";
 import { Button } from "../ui/button";
 import { useState, useTransition } from "react";
 import { signup } from "@/actions/signup";
+import { Loader2 } from "lucide-react";
 
 export const SignupForm = () => {
   const [isPending, startTransition] = useTransition();
@@ -114,7 +115,7 @@ export const SignupForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button type="submit" className="w-full" disabled={isPending}>
-            Register
+            {isPending ? <Loader2 className="size-5 animate-spin" /> : "Signup"}
           </Button>
         </form>
       </Form>

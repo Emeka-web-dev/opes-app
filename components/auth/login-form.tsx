@@ -13,7 +13,7 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { FormInput } from "lucide-react";
+import { FormInput, Loader2 } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { FormError } from "../form-error";
@@ -139,7 +139,13 @@ export const LoginForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button className="w-full" type="submit" disabled={isPending}>
-            {isTwoFactor ? "Confirm" : "Submit"}
+            {isPending ? (
+              <Loader2 className="size-5 animate-spin" />
+            ) : isTwoFactor ? (
+              "Confirm"
+            ) : (
+              "Submit"
+            )}
           </Button>
         </form>
       </Form>

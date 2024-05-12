@@ -21,6 +21,7 @@ import { Input } from "../ui/input";
 import { CardWrapper } from "./card-wrapper";
 import { useSearchParams } from "next/navigation";
 import { newPassword } from "@/actions/new-password";
+import { Loader2 } from "lucide-react";
 
 export const NewPasswordForm = () => {
   const searchParams = useSearchParams();
@@ -79,7 +80,11 @@ export const NewPasswordForm = () => {
           <FormError message={error} />
           <FormSuccess message={success} />
           <Button type="submit" className="w-full" disabled={isPending}>
-            Reset password
+            {isPending ? (
+              <Loader2 className="size-5 animate-spin" />
+            ) : (
+              "Reset password"
+            )}
           </Button>
         </form>
       </Form>

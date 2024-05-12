@@ -33,7 +33,7 @@ const Checkout = () => {
       <button onClick={signOut} className="w-fit">
         signout
       </button>
-      <Button onClick={onClick} className="w-fit">
+      <Button onClick={onClick} className="w-fit" disabled={isLoading}>
         Payment
       </Button>
     </div>
