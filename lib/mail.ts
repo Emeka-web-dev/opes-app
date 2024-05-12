@@ -11,7 +11,8 @@ const transporter = createTransport({
 });
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const confirmLink = `https://opes-app-jet.vercel.app/auth/new-password?token=${token}`;
+  const confirmLink = `${process.env
+    .NEXT_PUBLIC_BASE_URL!}/auth/new-password?token=${token}`;
 
   const mailOptions = {
     from: `Opes Tech <${process.env.BREVO_USER}>`,
@@ -28,7 +29,8 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `https://opes-app-jet.vercel.app/auth/new-verification?token=${token}`;
+  const confirmLink = `${process.env
+    .NEXT_PUBLIC_BASE_URL!}/auth/new-verification?token=${token}`;
   const mailOptions = {
     from: `Opes Tech <${process.env.BREVO_USER}>`,
     to: email,

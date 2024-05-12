@@ -1,7 +1,6 @@
 import NextAuth from "next-auth";
-import { Ratelimit } from "@upstash/ratelimit";
+
 import authConfig from "./auth.config";
-import { kv } from "@vercel/kv";
 
 import {
   DEFAULT_LOGIN_REDIRECTION,
@@ -11,23 +10,15 @@ import {
 } from "./routes";
 const { auth: middleware } = NextAuth(authConfig);
 
-const rateLimit = new Ratelimit({
-  redis: kv,
-  limiter: Ratelimit.slidingWindow(8, "10 s"),
-});
 export default middleware(async (req) => {
-  const ip = req.ip ?? "127.0.0.1";
   const { nextUrl } = req;
-  const { success, remaining } = await rateLimit.limit(ip);
-
   const isLoggedIn = !!req.auth;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoute.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
-  if (!success && remaining === 0) {
-    return Response.json({ message: "To many request" });
-  }
+  // const isPurchased = ne
+
   if (isApiAuthRoute) return;
 
   if (isAuthRoute) {
@@ -36,9 +27,9 @@ export default middleware(async (req) => {
     }
     return;
   }
-
+  const authRoute = `/auth/login${nextUrl?.search}`;
   if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+    return Response.redirect(new URL(authRoute, nextUrl));
   }
 
   return;

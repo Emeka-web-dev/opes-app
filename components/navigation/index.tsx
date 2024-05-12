@@ -15,12 +15,12 @@ export const NavigationItems = () => {
   return (
     <header
       className={cn(
-        "fixed h-[3.8rem] md:h-[4.5rem] top-0 w-full z-50 bg-white/80 dark:bg-[#1d2144]/80 backdrop-blur-lg",
+        "fixed h-[3.8rem] md:h-[4.5rem] top-0 w-screen z-50 bg-white/80 dark:bg-[#1d2144]/80 backdrop-blur-lg flex items-center",
         isAuthRoute && "shadow-md",
         scrollTop && "shadow-md"
       )}
     >
-      <div className="py-3 px-4 flex items-center justify-between max-w-7xl mx-auto">
+      <div className="px-4 flex items-center justify-between w-full max-w-7xl mx-auto">
         <Link href="/">OPES</Link>
         <div className="flex items-center space-x-28">
           {pathName === "/" && (

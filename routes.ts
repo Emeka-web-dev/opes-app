@@ -3,7 +3,12 @@
  * These routes do not require authentication
  * @type {string[]}
  */
-export const publicRoute = ["/", "/auth/new-verification", "/block"];
+export const publicRoute = [
+  "/",
+  "/auth/new-verification",
+  "/api/webhook",
+  // "/block",
+];
 
 /**
  * An array of routes that are use for authentication
@@ -29,4 +34,4 @@ export const apiAuthPrefix = "/api/auth";
  * The default redirect path after login
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECTION = "/settings";
+export const DEFAULT_LOGIN_REDIRECTION = "/checkout";

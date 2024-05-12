@@ -1,13 +1,20 @@
 import { Check } from "lucide-react";
 import React from "react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 interface PricingProps {
   name: string;
   amount: string;
+  url: string;
   points: string[];
 }
-export const PricingContainer = ({ name, amount, points }: PricingProps) => {
+export const PricingContainer = ({
+  name,
+  amount,
+  points,
+  url,
+}: PricingProps) => {
   return (
     <div className="border border-gray-400 px-8 py-6 max-w-96 mx-auto w-full rounded-2xl flex flex-col relative overflow-hidden bg-inherit">
       <div className="absolute w-[350px] h-[350px] rounded-full -top-56 -left-14 bg-[#f4fafe] dark:bg-[#919bb1] -z-10" />
@@ -24,7 +31,9 @@ export const PricingContainer = ({ name, amount, points }: PricingProps) => {
           </div>
         ))}
       </div>
-      <Button className="mt-5">Choose {name}</Button>
+      <Button className="mt-5" asChild>
+        <Link href={url}>Choose {name}</Link>
+      </Button>
     </div>
   );
 };

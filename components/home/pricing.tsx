@@ -2,6 +2,7 @@ import React from "react";
 import { ContainerLayout } from "./container-layout";
 import { PricingContainer } from "./pricing-container";
 import Image from "next/image";
+import { Tier } from "@prisma/client";
 
 export const Pricing = () => {
   return (
@@ -14,16 +15,19 @@ export const Pricing = () => {
           <PricingContainer
             name="Basic Plan"
             amount="2000"
+            url={`/checkout?plan=${Tier.BASIC}`}
             points={["Life time free updates!", "Unlimited transactions"]}
           />
           <PricingContainer
             name="Popular Plan"
             amount="3000"
+            url={`/checkout?plan=${Tier.POPULAR}`}
             points={["Life time free updates!", "Unlimited transactions"]}
           />
           <PricingContainer
             name="Goldern Plan"
             amount="5000"
+            url={`/checkout?plan=${Tier.GOLDEN}`}
             points={["Life time free updates!", "Unlimited transactions"]}
           />
         </div>
