@@ -7,10 +7,10 @@ export const currentUser = async () => {
 };
 
 export const purchase = async () => {
-  const user = await currentUser();
+  const session = await auth();
   const purchase = await db.purchase.findUnique({
     where: {
-      userId: user?.id,
+      userId: session?.user.id,
     },
   });
   return purchase;

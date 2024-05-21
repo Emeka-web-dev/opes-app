@@ -2,16 +2,16 @@
 import { logout } from "@/actions/logout";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "../ui/button";
 
 const Checkout = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
+
   const user = useCurrentUser();
-  const signOut = () => {
-    logout();
+  const signOut = async () => {
+    await logout();
+    window.location.reload();
   };
   const onClick = async () => {
     try {
@@ -30,9 +30,9 @@ const Checkout = () => {
       {/* {JSON.stringify(user)} */}
       <p>{user?.email}</p>
 
-      <button onClick={signOut} className="w-fit">
+      <Button onClick={signOut} className="w-fit">
         signout
-      </button>
+      </Button>
       <Button onClick={onClick} className="w-fit" disabled={isLoading}>
         Payment
       </Button>

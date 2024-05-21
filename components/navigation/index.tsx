@@ -6,9 +6,18 @@ import { NavigationRef } from "./navigation-ref";
 import { MobileToggle } from "../home/mobile-toggle";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
+import { useEffect } from "react";
 
 export const NavigationItems = () => {
+  const router = useRouter();
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
+
+  const user = useCurrentUser();
   const pathName = usePathname();
   const scrollTop = useScrollTop();
   const isAuthRoute = pathName.startsWith("/auth");
@@ -29,17 +38,22 @@ export const NavigationItems = () => {
             </div>
           )}
           <div className="flex items-center space-x-4">
-            <Button>
-              <Link
-                href={
-                  pathName.startsWith("/auth/login")
-                    ? "/auth/signup"
-                    : "/auth/login"
-                }
-              >
-                {pathName.startsWith("/auth/login") ? "Signup" : "Login"}
-              </Link>
-            </Button>
+            {user ? (
+              <NavbarDropDownMenu user={user} />
+            ) : (
+              <Button>
+                <Link
+                  href={
+                    pathName.startsWith("/auth/login")
+                      ? "/auth/signup"
+                      : "/auth/login"
+                  }
+                >
+                  {pathName.startsWith("/auth/login") ? "Signup" : "Login"}
+                </Link>
+              </Button>
+            )}
+
             <ModeToggle />
             {pathName === "/" && <MobileToggle />}
           </div>

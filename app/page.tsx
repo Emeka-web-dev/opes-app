@@ -8,7 +8,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <main className="scroll-smooth overflow-x-hidden">
+    <main className="scroll-smooth overflow-x-hidden dark:bg-[#1d2144]">
       <NavigationItems />
       <div className="pt-[4.5rem]">
         <section className="max-w-7xl mx-auto">

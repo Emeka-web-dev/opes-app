@@ -40,7 +40,7 @@ export async function GET(req: Request) {
         "Content-Type": "application/json",
       },
     });
-    console.log(response.data);
+
     return NextResponse.json(response.data);
   } catch (error) {
     console.log("INTERNAL_ERROR", error);

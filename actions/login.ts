@@ -10,6 +10,7 @@ import { generateTwoFactorToken, generateVerificationToken } from "@/lib/token";
 import { DEFAULT_LOGIN_REDIRECTION } from "@/routes";
 import { LoginSchema } from "@/schemas";
 import { AuthError } from "next-auth";
+import { revalidatePath } from "next/cache";
 import * as z from "zod";
 
 export const login = async (values: z.infer<typeof LoginSchema>) => {
@@ -22,8 +23,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const { email, password, code } = validatedFields.data;
 
   const existingUser = await getUserByEmail(email);
+  console.log({ existingUser });
 
-  if (!existingUser || !existingUser.password || !existingUser.email) {
+  if (!existingUser || !existingUser.email) {
     return { error: "Invalid credential!" };
   }
 
@@ -88,9 +90,9 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: DEFAULT_LOGIN_REDIRECTION,
+      redirectTo: "/checkout",
     });
-
+    revalidatePath("/checkout");
     return { success: "Logged in successful!" };
   } catch (error) {
     if (error instanceof AuthError) {

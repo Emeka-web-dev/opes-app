@@ -1,16 +1,11 @@
-"use client";
-import { logout } from "@/actions/logout";
-import { Button } from "@/components/ui/button";
-import React from "react";
+import { Balance } from "@/components/dashboard/balance";
+import { ReferralLink } from "@/components/dashboard/referral-link";
+import { UserContainter } from "@/components/dashboard/user-dashboard-container";
 
 const DashboardPage = () => {
-  const signOut = () => {
-    logout();
-  };
   return (
-    <div>
-      DashboardPage
-      <Button onClick={signOut}>Signout</Button>
+    <div className="">
+      <UserContainter left={<Balance />} right={<ReferralLink />} />
     </div>
   );
 };

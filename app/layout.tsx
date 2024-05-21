@@ -19,12 +19,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+
   return (
     <SessionProvider session={session}>
       <html lang="en" suppressHydrationWarning>
-        <body
-          className={cn(inter.className, "dark:bg-[#1d2144] scroll-smooth")}
-        >
+        <body className={cn(inter.className, "scroll-smooth")}>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
