@@ -90,7 +90,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: "/checkout",
+      redirectTo: !!existingUser.purchase ? "/dashboard" : "/",
     });
     revalidatePath("/checkout");
     return { success: "Logged in successful!" };

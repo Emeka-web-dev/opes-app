@@ -8,9 +8,12 @@ import {
   authRoutes,
   publicRoute,
 } from "./routes";
+import { currentUser } from "./lib/auth";
 const { auth: middleware } = NextAuth(authConfig);
 
 export default middleware(async (req) => {
+  const user = await currentUser();
+  const isSubscribed = user?.isSubscribed;
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
@@ -21,7 +24,9 @@ export default middleware(async (req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECTION, nextUrl));
+      return Response.redirect(
+        new URL(isSubscribed ? "/dashboard" : "/", nextUrl)
+      );
     }
     return;
   }

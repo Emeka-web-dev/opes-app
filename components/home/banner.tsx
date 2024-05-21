@@ -15,7 +15,6 @@ export const Banner = () => {
             Lorem ipsum dolor sit amet, consec adipiscing elit In vulputate
             vitae massa eu dapibus ligula.
           </p>
-          <Button className="w-fit">Create an account</Button>
         </div>
         <div className="flex justify-center items-center relative  lg:pb-0 ">
           <div className="absolute w-[400px] h-[400px] rounded-full dark:bg-[#343754] bg-[#f0f3fd] a30" />

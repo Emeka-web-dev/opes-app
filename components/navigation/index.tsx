@@ -1,23 +1,15 @@
 "use client";
-import Link from "next/link";
-import { ModeToggle } from "../home/modal-toggle";
-import { Button } from "../ui/button";
-import { NavigationRef } from "./navigation-ref";
-import { MobileToggle } from "../home/mobile-toggle";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import { cn } from "@/lib/utils";
-import { usePathname, useRouter } from "next/navigation";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { MobileToggle } from "../home/mobile-toggle";
+import { ModeToggle } from "../home/modal-toggle";
 import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
-import { useEffect } from "react";
+import { Button } from "../ui/button";
+import { NavigationRef } from "./navigation-ref";
 
-export const NavigationItems = () => {
-  const router = useRouter();
-  useEffect(() => {
-    router.refresh();
-  }, [router]);
-
-  const user = useCurrentUser();
+export const NavigationItems = ({ user }: any) => {
   const pathName = usePathname();
   const scrollTop = useScrollTop();
   const isAuthRoute = pathName.startsWith("/auth");

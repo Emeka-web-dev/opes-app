@@ -5,11 +5,13 @@ import { Guidiance } from "@/components/home/guidiance";
 import { NavigationItems } from "@/components/navigation";
 import { Pricing } from "@/components/home/pricing";
 import Image from "next/image";
+import { currentUser } from "@/lib/auth";
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
   return (
     <main className="scroll-smooth overflow-x-hidden dark:bg-[#1d2144]">
-      <NavigationItems />
+      <NavigationItems user={user} />
       <div className="pt-[4.5rem]">
         <section className="max-w-7xl mx-auto">
           <Banner />
