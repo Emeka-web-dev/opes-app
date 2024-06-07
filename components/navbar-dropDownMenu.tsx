@@ -15,7 +15,7 @@ import {
 // } from "@/components/ui/popover";
 import { logout } from "@/actions/logout";
 import { ChevronDown } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
 type NavbarDropProps = {
@@ -23,6 +23,7 @@ type NavbarDropProps = {
 };
 export const NavbarDropDownMenu = ({ user }: NavbarDropProps) => {
   const router = useRouter();
+  const pathName = usePathname();
 
   const nameAbrev = user?.name?.split("").splice(0, 2).join("");
 

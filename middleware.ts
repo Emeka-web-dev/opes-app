@@ -14,6 +14,8 @@ const { auth: middleware } = NextAuth(authConfig);
 export default middleware(async (req) => {
   const user = await currentUser();
   const isSubscribed = user?.isSubscribed;
+  const isPaymentPlan = user?.paymentPlan!!;
+
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
@@ -25,7 +27,7 @@ export default middleware(async (req) => {
   if (isAuthRoute) {
     if (isLoggedIn) {
       return Response.redirect(
-        new URL(isSubscribed ? "/dashboard" : "/", nextUrl)
+        new URL(isSubscribed ? "/dashboard" : "/checkout", nextUrl)
       );
     }
     return;
@@ -33,7 +35,10 @@ export default middleware(async (req) => {
   const authRoute = `/auth/signup${nextUrl?.search}`;
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(
-      new URL(nextUrl?.search ? authRoute : "/auth/login", nextUrl)
+      new URL(
+        nextUrl?.searchParams?.get("ref") ? authRoute : "/auth/login",
+        nextUrl
+      )
     );
   }
   // if (!isLoggedIn) {

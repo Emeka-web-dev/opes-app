@@ -21,11 +21,15 @@ import { Button } from "../ui/button";
 import { useState, useTransition } from "react";
 import { signup } from "@/actions/signup";
 import { Loader2 } from "lucide-react";
+import { useParams, useSearchParams } from "next/navigation";
 
 export const SignupForm = () => {
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
+  const params = useSearchParams();
+
+  const ref = params.get("ref");
 
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
@@ -33,13 +37,13 @@ export const SignupForm = () => {
       email: "",
       password: "",
       name: "",
+      referralLink: ref || undefined,
     },
   });
 
   const onSubmit = (values: z.infer<typeof SignupSchema>) => {
     setError("");
     setSuccess("");
-
     startTransition(() => {
       signup(values).then((data) => {
         form.resetField("password");

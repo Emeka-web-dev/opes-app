@@ -1,12 +1,12 @@
 "use server";
 
-import { SignupSchema } from "@/schemas";
-import * as z from "zod";
-import bcrypt from "bcryptjs";
+import { getUserByEmail, getUserByRefToken } from "@/data/user";
 import { db } from "@/lib/db";
-import { getUserByEmail } from "@/data/user";
-import { generateVerificationToken } from "@/lib/token";
 import { sendVerificationEmail } from "@/lib/mail";
+import { generateVerificationToken } from "@/lib/token";
+import { SignupSchema } from "@/schemas";
+import bcrypt from "bcryptjs";
+import * as z from "zod";
 
 export const signup = async (values: z.infer<typeof SignupSchema>) => {
   const validatedFields = SignupSchema.safeParse(values);
@@ -15,7 +15,7 @@ export const signup = async (values: z.infer<typeof SignupSchema>) => {
     return { error: "Invalid field!" };
   }
 
-  const { name, email, password } = validatedFields.data;
+  const { name, email, password, referralLink } = validatedFields.data;
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -25,13 +25,35 @@ export const signup = async (values: z.infer<typeof SignupSchema>) => {
     return { error: "Email already in use!" };
   }
 
-  await db.user.create({
+  let referrer;
+  if (referralLink) {
+    referrer = await getUserByRefToken(referralLink);
+  }
+
+  const newUser = await db.user.create({
     data: {
       name,
       email,
       password: hashedPassword,
+      referredById: referrer?.id || null,
+      paymentPlan: referrer?.paymentPlan,
     },
   });
+
+  if (referrer) {
+    await db.referral.create({
+      data: {
+        referrerId: referrer.id,
+        referredId: newUser.id,
+        generation:
+          (await db.referral.count({
+            where: { referredId: referrer.id },
+          })) > 0
+            ? 2
+            : 1,
+      },
+    });
+  }
 
   const verificationToken = await generateVerificationToken(email);
 

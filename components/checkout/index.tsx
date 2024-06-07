@@ -1,14 +1,21 @@
 "use client";
 import { logout } from "@/actions/logout";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
 import axios from "axios";
 import { useState } from "react";
+import { NavigationItems } from "../navigation";
 import { Button } from "../ui/button";
+import { redirect, useSearchParams } from "next/navigation";
+import { PaymentPlan } from "@prisma/client";
 
-const Checkout = () => {
+type CheckoutProps = {
+  user: any;
+};
+export function Checkout({ user }: CheckoutProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
 
-  const user = useCurrentUser();
+  const plan = searchParams.get("plan");
+
   const signOut = async () => {
     await logout();
     window.location.reload();
@@ -16,7 +23,7 @@ const Checkout = () => {
   const onClick = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get("/api/checkout");
+      const { data } = await axios.post("/api/checkout", JSON.stringify(plan));
       window.location.assign(data.data.authorization_url);
     } catch (error) {
       console.log("Something went wrong", error);
@@ -25,12 +32,20 @@ const Checkout = () => {
     }
   };
 
+  const isPaymentPlan = (value: any) => {
+    return Object.values(PaymentPlan).includes(value);
+  };
+
+  console.log(user?.paymentPlan);
+
+  if (!user?.paymentPlan && !isPaymentPlan(plan)) {
+    return redirect("/");
+  }
+
   return (
     <div className="flex flex-col">
-      {/* {JSON.stringify(user)} */}
-      <p>{user?.email}</p>
-
-      <Button onClick={signOut} className="w-fit">
+      <NavigationItems user={user} />
+      <Button onClick={signOut} className="w-fit pt-20">
         signout
       </Button>
       <Button onClick={onClick} className="w-fit" disabled={isLoading}>
@@ -38,6 +53,4 @@ const Checkout = () => {
       </Button>
     </div>
   );
-};
-
-export default Checkout;
+}

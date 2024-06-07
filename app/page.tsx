@@ -2,13 +2,17 @@ import { Banner } from "@/components/home/banner";
 import { Contact } from "@/components/home/contact";
 import { Faq } from "@/components/home/faq";
 import { Guidiance } from "@/components/home/guidiance";
-import { NavigationItems } from "@/components/navigation";
 import { Pricing } from "@/components/home/pricing";
-import Image from "next/image";
+import { NavigationItems } from "@/components/navigation";
 import { currentUser } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
   const user = await currentUser();
+
+  if (user?.paymentPlan) {
+    redirect("/checkout");
+  }
   return (
     <main className="scroll-smooth overflow-x-hidden dark:bg-[#1d2144]">
       <NavigationItems user={user} />

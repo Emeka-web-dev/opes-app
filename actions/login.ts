@@ -23,7 +23,6 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   const { email, password, code } = validatedFields.data;
 
   const existingUser = await getUserByEmail(email);
-  console.log({ existingUser });
 
   if (!existingUser || !existingUser.email) {
     return { error: "Invalid credential!" };
@@ -90,7 +89,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     await signIn("credentials", {
       email,
       password,
-      redirectTo: !!existingUser.purchase ? "/dashboard" : "/",
+      redirectTo: !!existingUser.payment ? "/dashboard" : "/",
     });
     revalidatePath("/checkout");
     return { success: "Logged in successful!" };

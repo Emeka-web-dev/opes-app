@@ -1,3 +1,4 @@
+// import { auth } from "@/auth";
 import { auth } from "@/auth";
 import { db } from "./db";
 
@@ -8,7 +9,7 @@ export const currentUser = async () => {
 
 export const purchase = async () => {
   const session = await auth();
-  const purchase = await db.purchase.findUnique({
+  const purchase = await db.payment.findUnique({
     where: {
       userId: session?.user.id,
     },

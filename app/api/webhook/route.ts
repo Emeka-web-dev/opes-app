@@ -3,6 +3,8 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { Logging, createLogging } from "@/lib/logging";
+import { date } from "zod";
+import { generateRefToken } from "@/lib/ref-token";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -17,21 +19,31 @@ export async function POST(req: Request) {
   }
 
   const userId = body.data.metadata.userId;
-  const tier = body.data.metadata.tier;
+  const paymentPlan = body.data.metadata.tier;
 
   if (body.event === "charge.success") {
-    if (!userId || !tier) {
+    if (!userId || !paymentPlan) {
       return new NextResponse(`Webhook Error: Missing metadata`, {
         status: 400,
       });
     }
-
-    await db.purchase.create({
+    console.log({ body });
+    await db.payment.create({
       data: {
         userId,
-        tier,
-        amount: body?.data?.amount,
+        method: body?.data?.channel,
+        amount: body?.data?.amount / 100,
         reference: body?.data?.reference,
+      },
+    });
+
+    await db.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        paymentPlan,
+        invitationCode: generateRefToken(6),
       },
     });
   } else {

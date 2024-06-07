@@ -2,7 +2,7 @@ import React from "react";
 import { ContainerLayout } from "./container-layout";
 import { PricingContainer } from "./pricing-container";
 import Image from "next/image";
-import { Tier } from "@prisma/client";
+import { PaymentPlan as Tier } from "@prisma/client";
 
 export const Pricing = () => {
   return (

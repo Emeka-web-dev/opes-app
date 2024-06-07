@@ -1,13 +1,15 @@
-import Checkout from "@/components/checkout";
-import { purchase } from "@/lib/auth";
+import { Checkout } from "@/components/checkout";
+import { currentUser, purchase } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 const SettingsPage = async () => {
-  const userPurchase = await purchase();
+  const user = await currentUser();
 
-  if (userPurchase) redirect("/dashboard");
+  if (user?.isSubscribed) {
+    return redirect("/dashboard");
+  }
 
-  return <Checkout />;
+  return <Checkout user={user} />;
 };
 
 export default SettingsPage;

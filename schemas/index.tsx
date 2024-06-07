@@ -28,6 +28,7 @@ export const SignupSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
   }),
+  referralLink: z.optional(z.string()),
 });
 
 export const ResetSchema = z.object({

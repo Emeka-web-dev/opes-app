@@ -7,7 +7,7 @@ export const getUserByEmail = async (email: string) => {
         email,
       },
       include: {
-        purchase: true,
+        payment: true,
       },
     });
     return user;
@@ -23,7 +23,7 @@ export const getUserById = async (id: string) => {
         id,
       },
       include: {
-        purchase: true,
+        payment: true,
       },
     });
     return user;
@@ -31,3 +31,24 @@ export const getUserById = async (id: string) => {
     return null;
   }
 };
+
+export const getUserByRefToken = async (invitationCode: string) => {
+  try {
+    const user = await db.user.findUnique({
+      where: {
+        invitationCode,
+      },
+    });
+    return user;
+  } catch (error) {
+    return null;
+  }
+};
+
+// export const getPaymentByUserId = async (id: string) => {
+//   try {
+//     const payment = aw
+//   } catch (error) {
+//     return null
+//   }
+// }

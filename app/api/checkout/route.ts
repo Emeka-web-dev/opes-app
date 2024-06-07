@@ -1,18 +1,30 @@
 import { auth } from "@/auth";
+import { getUserById } from "@/data/user";
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
-import { Tier } from "@prisma/client";
+import { PaymentPlan } from "@prisma/client";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-export async function GET(req: Request) {
+export async function POST(req: Request) {
+  const body = (await req.json()) as PaymentPlan | undefined;
+
+  const paymentPlans: Record<PaymentPlan, number> = {
+    BASIC: 2000,
+    POPULAR: 3000,
+    GOLDEN: 5000,
+  };
+
   try {
     const user = await currentUser();
+
+    const parentUser = await getUserById(user?.referrerId || "");
+    const plan = parentUser?.paymentPlan;
 
     if (!user || !user?.email) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
-    const purchase = await db.purchase.findUnique({
+    const purchase = await db.payment.findUnique({
       where: {
         userId: user.id,
       },
@@ -24,12 +36,13 @@ export async function GET(req: Request) {
 
     const apiRoute = "https://api.paystack.co/transaction/initialize";
 
+    const selectedPlan: PaymentPlan = plan || body || "BASIC";
     const params = {
       email: user?.email,
-      amount: 2000 * 100,
+      amount: paymentPlans[selectedPlan] * 100,
       metadata: {
         userId: user?.id,
-        tier: Tier.BASIC,
+        tier: selectedPlan,
         cancel_action: `${process.env.BASE_URL!}/checkout`,
       },
     };

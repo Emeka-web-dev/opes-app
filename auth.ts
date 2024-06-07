@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 import authConfig from "./auth.config";
 import github from "next-auth/providers/github";
 import { getUserById } from "./data/user";
-import { UserRole } from "@prisma/client";
+import { PaymentPlan, UserRole } from "@prisma/client";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-comfirmation";
 // import { UserRole } from "@prisma/client";
 // import { getTwoFactorConfirmationByUserId } from "./data/two-factor-comfirmation";
@@ -40,6 +40,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (token.role && session.user) {
         session.user.role = token.role as UserRole;
         session.user.isSubscribed = token.isSubscribed as boolean;
+        session.user.paymentPlan = token.paymentPlan as PaymentPlan | null;
+        session.user.referrerId = token.referrerId as string;
       }
       // if (session.user) {
       //   session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
@@ -54,7 +56,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!existingUser) return token;
 
       token.role = existingUser.role;
-      token.isSubscribed = !!existingUser.purchase;
+      token.isSubscribed = !!existingUser.payment;
+      token.paymentPlan = existingUser.paymentPlan;
+      token.referrerId = existingUser.referredById;
       // token.isTwoFactorEnabled = existingUser?.isTwoFactorEnabled;
       return token;
     },
