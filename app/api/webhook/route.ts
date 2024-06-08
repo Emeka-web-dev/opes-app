@@ -5,6 +5,9 @@ import { db } from "@/lib/db";
 import { Logging, createLogging } from "@/lib/logging";
 import { date } from "zod";
 import { generateRefToken } from "@/lib/ref-token";
+import { calculateReferralRewards } from "@/hooks/referral";
+import { getUserById } from "@/data/user";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: Request) {
   const body = await req.json();
@@ -21,22 +24,31 @@ export async function POST(req: Request) {
   const userId = body.data.metadata.userId;
   const paymentPlan = body.data.metadata.tier;
 
+  const user = await getUserById(userId);
+  if (!user) {
+    return new NextResponse("User not found!", { status: 400 });
+  }
+
+  // if payment is successful
   if (body.event === "charge.success") {
     if (!userId || !paymentPlan) {
       return new NextResponse(`Webhook Error: Missing metadata`, {
         status: 400,
       });
     }
-    console.log({ body });
+    const amount = body?.data?.amount / 100;
+
+    //create payment
     await db.payment.create({
       data: {
         userId,
         method: body?.data?.channel,
-        amount: body?.data?.amount / 100,
+        amount,
         reference: body?.data?.reference,
       },
     });
 
+    //update user profile
     await db.user.update({
       where: {
         id: userId,
@@ -46,6 +58,16 @@ export async function POST(req: Request) {
         invitationCode: generateRefToken(6),
       },
     });
+
+    //if user is referred
+    if (user?.referredById) {
+      await calculateReferralRewards(user, amount);
+    }
+    revalidatePath("/");
+    revalidatePath("/checkout");
+    revalidatePath("/dashboard");
+
+    console.log("Earnings distributed");
   } else {
     const logging: Logging = {
       event: body.event,
@@ -59,20 +81,6 @@ export async function POST(req: Request) {
       { status: 200 }
     );
   }
-  //   console.log({
-  //     signature,
-  //     hash,
-  //     bod: {
-  //       metadata: body.data.metadata,
-  //       authorization: body.data.authorization,
-  //       customer: body.data.customer,
-  //       source: body.data.source,
-  //     },
-  //   });
-  //   if (hash === signature) {
-  //     console.log("EVENT", event);
-  //   }
-  //   console.log(headers().get("x-paystack-signature"));
-  //   const body = await req.json();
+
   return new NextResponse(null, { status: 200 });
 }
