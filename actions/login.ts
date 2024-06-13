@@ -91,7 +91,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       password,
       redirectTo: !!existingUser.payment ? "/dashboard" : "/",
     });
-    revalidatePath("/checkout");
+    // revalidatePath("/checkout");
     return { success: "Logged in successful!" };
   } catch (error) {
     if (error instanceof AuthError) {

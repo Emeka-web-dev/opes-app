@@ -15,16 +15,12 @@ import {
 // } from "@/components/ui/popover";
 import { logout } from "@/actions/logout";
 import { ChevronDown } from "lucide-react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 
 type NavbarDropProps = {
   user: any;
 };
 export const NavbarDropDownMenu = ({ user }: NavbarDropProps) => {
-  const router = useRouter();
-  const pathName = usePathname();
-
   const nameAbrev = user?.name?.split("").splice(0, 2).join("");
 
   const signOut = async () => {
@@ -48,7 +44,7 @@ export const NavbarDropDownMenu = ({ user }: NavbarDropProps) => {
             </Avatar>
 
             <div className="xl:flex flex-col justify-end hidden">
-              <span>{user.name}</span>
+              <span>{user?.name}</span>
               <span className="line-clamp-1 text-xs text-gray-600">
                 {user?.email}
               </span>

@@ -1,11 +1,13 @@
 import { db } from "@/lib/db";
+import { NextApiResponseServerIo } from "@/types";
 import { User } from "@prisma/client";
 
 const maxReferralsPerGeneration = 2;
 
 export async function calculateReferralRewards(
   user: User,
-  amount: number
+  amount: number,
+  res: NextApiResponseServerIo
 ): Promise<void> {
   let currentGeneration = 1;
   let referrerId = user.referredById;
@@ -32,9 +34,7 @@ export async function calculateReferralRewards(
         },
       },
     });
-    console.log({
-      referralCount,
-    });
+
     if (referralCount > maxReferralsPerGeneration) {
       console.log("Reach limit");
       break;
@@ -55,12 +55,19 @@ export async function calculateReferralRewards(
 
     const reward = (amount * rewardPercentage) / 100;
 
-    await db.user.update({
+    const parentUser = await db.user.update({
       where: { id: referrer.id },
       data: {
         earnings: referrer.earnings + reward,
       },
+      include: {
+        referrals: true,
+      },
     });
+
+    const querykey = `user:${parentUser.id}`;
+
+    res?.socket?.server?.io?.emit(querykey, parentUser);
 
     referrerId = referrer.referredById;
     currentGeneration++;

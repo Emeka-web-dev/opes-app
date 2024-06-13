@@ -1,20 +1,31 @@
+"use client";
 import { Balance } from "@/components/dashboard/balance";
 import { ReferralLink } from "@/components/dashboard/referral-link";
 import { UserContainter } from "@/components/dashboard/user-dashboard-container";
-import { getUserById } from "@/data/user";
-import { currentUser } from "@/lib/auth";
+import { useUserQuery } from "@/hooks/use-user-query";
+import { useUserSocket } from "@/hooks/use-user-socket";
+import { useSessionStore } from "@/hooks/useSessionStore";
 
-export const revalidate = 0;
-const DashboardPage = async () => {
-  const user = await currentUser();
-  const userInfo = await getUserById(user?.id!);
+const DashboardPage = () => {
+  const session = useSessionStore((state) => state.session);
+  const queryKey = `user:${session?.user?.id}`;
+
+  const { data, status } = useUserQuery({
+    apiUrl: "/api/currentUser",
+    queryKey,
+  });
+  useUserSocket({ queryKey });
 
   return (
     <div className="">
-      <UserContainter
-        left={<Balance earning={userInfo?.earnings} />}
-        right={<ReferralLink refLink={userInfo?.invitationCode} />}
-      />
+      {status === "pending" && "Loading..."}
+      {status === "error" && "Error..."}
+      {status === "success" && (
+        <UserContainter
+          left={<Balance earning={data?.earnings} />}
+          right={<ReferralLink refLink={data?.invitationCode} />}
+        />
+      )}
     </div>
   );
 };

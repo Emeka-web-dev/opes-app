@@ -14,7 +14,7 @@ export function Checkout({ user }: CheckoutProps) {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
 
-  const plan = searchParams.get("plan");
+  const plan = searchParams?.get("plan");
 
   const signOut = async () => {
     await logout();
