@@ -17,7 +17,7 @@ export const useUserQuery = ({ queryKey, apiUrl }: UserQuery) => {
   const { data, status } = useQuery({
     queryKey: [queryKey],
     queryFn: fetchUser,
-    refetchInterval: isConnected ? false : 1000,
+    refetchInterval: false,
   });
 
   return {
