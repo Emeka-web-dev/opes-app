@@ -29,7 +29,7 @@ export const SignupForm = () => {
   const [success, setSuccess] = useState<string | undefined>("");
   const params = useSearchParams();
 
-  const ref = params.get("ref");
+  const ref = params?.get("ref");
 
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),

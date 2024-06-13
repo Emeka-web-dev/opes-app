@@ -12,7 +12,7 @@ import { NavigationRef } from "./navigation-ref";
 export const NavigationItems = ({ user }: any) => {
   const pathName = usePathname();
   const scrollTop = useScrollTop();
-  const isAuthRoute = pathName.startsWith("/auth");
+  const isAuthRoute = pathName?.startsWith("/auth");
   return (
     <header
       className={cn(
@@ -36,12 +36,12 @@ export const NavigationItems = ({ user }: any) => {
               <Button>
                 <Link
                   href={
-                    pathName.startsWith("/auth/login")
+                    pathName?.startsWith("/auth/login")
                       ? "/auth/signup"
                       : "/auth/login"
                   }
                 >
-                  {pathName.startsWith("/auth/login") ? "Signup" : "Login"}
+                  {pathName?.startsWith("/auth/login") ? "Signup" : "Login"}
                 </Link>
               </Button>
             )}
