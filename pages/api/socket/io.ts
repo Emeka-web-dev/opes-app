@@ -18,7 +18,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
       path: path,
       addTrailingSlash: false,
       cors: {
-        origin: process.env.NEXT_PUBLIC_SITE_URL!,
+        origin: "https://opes-app-jet.vercel.app",
         methods: ["GET", "POST"],
         credentials: true,
       },
