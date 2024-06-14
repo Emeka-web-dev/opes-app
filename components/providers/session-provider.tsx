@@ -2,7 +2,7 @@
 
 import { useSessionStore } from "@/hooks/useSessionStore";
 import { Session } from "next-auth";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export const SessionProviders = ({
   children,
@@ -11,11 +11,10 @@ export const SessionProviders = ({
   children: React.ReactNode;
   session: Session | null;
 }) => {
-  const name = useState("");
   const setSession = useSessionStore((state) => state.setSession);
   useEffect(() => {
     setSession(session);
   }, [setSession, session]);
 
-  return <div>{children}</div>;
+  return <>{children}</>;
 };
