@@ -1,5 +1,6 @@
 import { pusherServer } from "@/lib/pusher";
 import { nanoid } from "nanoid";
+import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const data = await req.text();
@@ -20,5 +21,5 @@ export async function POST(req: Request) {
     presenceData
   );
 
-  return new Response(JSON.stringify(auth));
+  return new NextResponse(JSON.stringify(auth));
 }
