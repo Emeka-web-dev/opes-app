@@ -14,7 +14,7 @@ export function Checkout({ user }: CheckoutProps) {
   const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
 
-  const plan = searchParams.get("plan");
+  const plan = searchParams?.get("plan");
 
   const signOut = async () => {
     await logout();
@@ -35,8 +35,6 @@ export function Checkout({ user }: CheckoutProps) {
   const isPaymentPlan = (value: any) => {
     return Object.values(PaymentPlan).includes(value);
   };
-
-  console.log(user?.paymentPlan);
 
   if (!user?.paymentPlan && !isPaymentPlan(plan)) {
     return redirect("/");

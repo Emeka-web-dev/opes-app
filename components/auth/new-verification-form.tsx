@@ -14,7 +14,7 @@ export const NewVerificationForm = () => {
   const [succes, setSuccess] = useState<string | undefined>();
   const { theme } = useTheme();
   const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const token = searchParams?.get("token");
   const setColor = theme === "dark" ? "#ffffff" : "#4682B4";
 
   const onClick = useCallback(() => {

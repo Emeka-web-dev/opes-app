@@ -1,4 +1,5 @@
 import { db } from "@/lib/db";
+import { pusherServer } from "@/lib/pusher";
 import { User } from "@prisma/client";
 
 const maxReferralsPerGeneration = 2;
@@ -32,9 +33,7 @@ export async function calculateReferralRewards(
         },
       },
     });
-    console.log({
-      referralCount,
-    });
+
     if (referralCount > maxReferralsPerGeneration) {
       console.log("Reach limit");
       break;
@@ -55,12 +54,21 @@ export async function calculateReferralRewards(
 
     const reward = (amount * rewardPercentage) / 100;
 
-    await db.user.update({
+    const referrerGen = await db.user.update({
       where: { id: referrer.id },
       data: {
         earnings: referrer.earnings + reward,
       },
+      include: {
+        referrals: true,
+      },
     });
+    console.log({ referrerGen });
+    pusherServer.trigger(
+      "messageChannel",
+      `user:${referrerGen?.id}`,
+      referrerGen
+    );
 
     referrerId = referrer.referredById;
     currentGeneration++;

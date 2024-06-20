@@ -3,17 +3,19 @@ import { Balance } from "@/components/dashboard/balance";
 import { ReferralLink } from "@/components/dashboard/referral-link";
 import { UserContainter } from "@/components/dashboard/user-dashboard-container";
 import { useUserQuery } from "@/hooks/use-user-query";
+import { useUserSocket } from "@/hooks/use-user-socket";
 import { useSessionStore } from "@/hooks/useSessionStore";
 
 const DashboardPage = () => {
   const session = useSessionStore((state) => state.session);
-  const queryKey = `user:${session?.user?.id}`;
+  const queryKey = "messageChannel";
 
   const { data, status } = useUserQuery({
     apiUrl: "/api/currentUser",
     queryKey,
   });
-  console.log({ data, status });
+
+  useUserSocket({ queryKey, eventId: `user:${session?.user?.id}` });
   return (
     <div className="">
       {status === "pending" && "Loading..."}
