@@ -17,9 +17,9 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
     const io = new ServerIO(httpServer, {
       path: path,
       addTrailingSlash: false,
-      transports: ["websocket"],
+      transports: ["websocket", "polling"],
       cors: {
-        origin: "https://opes-app-jet.vercel.app",
+        origin: process.env.NEXT_PUBLIC_SITE_URL!,
         methods: ["GET", "POST"],
         credentials: true,
       },
