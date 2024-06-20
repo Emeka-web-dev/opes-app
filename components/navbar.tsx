@@ -1,13 +1,14 @@
+"use client";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 
-import { currentUser } from "@/lib/auth";
+import { useSessionStore } from "@/hooks/useSessionStore";
 import { ModeToggle } from "./home/modal-toggle";
 import { NavbarDropDownMenu } from "./navbar-dropDownMenu";
 import { Button } from "./ui/button";
 
-export const Navbar = async () => {
-  const user = await currentUser();
+export const Navbar = () => {
+  const user = useSessionStore((state) => state.session);
 
   return (
     <div className="flex justify-between items-center px-2 w-full">
@@ -24,7 +25,7 @@ export const Navbar = async () => {
           <Bell className="w-5 h-5" />
         </Button>
         <ModeToggle />
-        <NavbarDropDownMenu user={user} />
+        <NavbarDropDownMenu user={user?.user} />
       </div>
     </div>
   );

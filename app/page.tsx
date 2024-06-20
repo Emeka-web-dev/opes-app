@@ -1,21 +1,23 @@
+"use client";
 import { Banner } from "@/components/home/banner";
 import { Contact } from "@/components/home/contact";
 import { Faq } from "@/components/home/faq";
 import { Guidiance } from "@/components/home/guidiance";
 import { Pricing } from "@/components/home/pricing";
 import { NavigationItems } from "@/components/navigation";
+import { useSessionStore } from "@/hooks/useSessionStore";
 import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
-export default async function Home() {
-  const user = await currentUser();
+export default function Home() {
+  const user = useSessionStore((state) => state.session);
 
-  if (user?.paymentPlan) {
+  if (user?.user?.paymentPlan) {
     redirect("/checkout");
   }
   return (
     <main className="scroll-smooth overflow-x-hidden dark:bg-[#1d2144]">
-      <NavigationItems user={user} />
+      <NavigationItems user={user?.user} />
       <div className="pt-[4.5rem]">
         <section className="max-w-7xl mx-auto">
           <Banner />

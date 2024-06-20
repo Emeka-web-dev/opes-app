@@ -48,7 +48,7 @@ export const NavbarDropDownMenu = ({ user }: NavbarDropProps) => {
             </Avatar>
 
             <div className="xl:flex flex-col justify-end hidden">
-              <span>{user.name}</span>
+              <span>{user?.name}</span>
               <span className="line-clamp-1 text-xs text-gray-600">
                 {user?.email}
               </span>
