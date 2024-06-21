@@ -63,7 +63,7 @@ export async function calculateReferralRewards(
         referrals: true,
       },
     });
-    console.log({ referrerGen });
+
     pusherServer.trigger(
       "messageChannel",
       `user:${referrerGen?.id}`,

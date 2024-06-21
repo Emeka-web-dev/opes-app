@@ -30,5 +30,5 @@ export const useUserSocket = ({
     return () => {
       pusherClient.unsubscribe(queryKey);
     };
-  }, [queryKey, queryClient]);
+  }, [queryKey, queryClient, eventId]);
 };
