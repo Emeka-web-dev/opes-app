@@ -8,7 +8,7 @@ import { useSessionStore } from "@/hooks/useSessionStore";
 
 const DashboardPage = () => {
   const session = useSessionStore((state) => state.session);
-  const queryKey = "messageChannel";
+  const queryKey = "getUserData";
 
   const { data, status } = useUserQuery({
     apiUrl: "/api/currentUser",

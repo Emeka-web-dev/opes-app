@@ -64,11 +64,7 @@ export async function calculateReferralRewards(
       },
     });
 
-    pusherServer.trigger(
-      "messageChannel",
-      `user:${referrerGen?.id}`,
-      referrerGen
-    );
+    pusherServer.trigger("getUserData", `user:${referrerGen?.id}`, referrerGen);
 
     referrerId = referrer.referredById;
     currentGeneration++;

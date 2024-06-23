@@ -16,11 +16,6 @@ export const useUserSocket = ({
 
     pusherClient.bind(eventId, (user: any) => {
       queryClient.setQueryData([queryKey], (oldData: any) => {
-        console.log({
-          user,
-          oldData,
-        });
-
         return {
           ...user,
         };
