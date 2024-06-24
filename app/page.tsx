@@ -16,7 +16,7 @@ export default function Home() {
     redirect("/checkout");
   }
   return (
-    <main className="scroll-smooth overflow-x-hidden dark:bg-[#1d2144]">
+    <main className="scroll-smooth overflow-x-hidden">
       <NavigationItems user={user?.user} />
       <div className="pt-[4.5rem]">
         <section className="max-w-7xl mx-auto">
@@ -31,7 +31,7 @@ export default function Home() {
           <Pricing />
         </section>
 
-        <section id="faq" className="bg-[#e4f2fe] dark:bg-[#07102d] ">
+        <section id="faq" className="bg-[#e4f2fe] dark:bg-[#030c21] ">
           <Faq />
         </section>
 

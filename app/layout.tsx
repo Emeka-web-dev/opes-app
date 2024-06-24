@@ -28,7 +28,7 @@ export default async function RootLayout({
         <body className={cn(inter.className, "scroll-smooth")}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="light"
             enableSystem
             storageKey="opes-app"
           >

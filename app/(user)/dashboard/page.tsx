@@ -17,14 +17,20 @@ const DashboardPage = () => {
 
   useUserSocket({ queryKey, eventId: `user:${session?.user?.id}` });
   return (
-    <div className="">
+    <div className="mt-4">
+      <h3 className="px-2 text-gray-700 dark:text-gray-200">
+        Welcome, {session?.user?.name}
+      </h3>
       {status === "pending" && "Loading..."}
       {status === "error" && "Error..."}
       {status === "success" && (
-        <UserContainter
-          left={<Balance earning={data?.earnings} />}
-          right={<ReferralLink refLink={data?.invitationCode} />}
-        />
+        <div>
+          <UserContainter
+            left={<Balance earning={data?.earnings} />}
+            right={<ReferralLink refLink={data?.invitationCode} />}
+          />
+          <div>somethin</div>
+        </div>
       )}
     </div>
   );
