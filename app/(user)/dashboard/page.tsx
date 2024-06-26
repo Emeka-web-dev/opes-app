@@ -1,7 +1,10 @@
 "use client";
 import { Balance } from "@/components/dashboard/balance";
+import { Barchart } from "@/components/dashboard/bar-chart";
+import { LineChartDropDown } from "@/components/dashboard/line-chart-dropdown";
 import { ReferralLink } from "@/components/dashboard/referral-link";
 import { UserContainter } from "@/components/dashboard/user-dashboard-container";
+import { UserItemComponent } from "@/components/user-item-component";
 import { useUserQuery } from "@/hooks/use-user-query";
 import { useUserSocket } from "@/hooks/use-user-socket";
 import { useSessionStore } from "@/hooks/useSessionStore";
@@ -29,7 +32,18 @@ const DashboardPage = () => {
             left={<Balance earning={data?.earnings} />}
             right={<ReferralLink refLink={data?.invitationCode} />}
           />
-          <div>somethin</div>
+
+          <UserContainter
+            left={
+              <UserItemComponent
+                title="Earnings"
+                navigation={<LineChartDropDown />}
+              >
+                <Barchart />
+              </UserItemComponent>
+            }
+            right={<p>right</p>}
+          />
         </div>
       )}
     </div>

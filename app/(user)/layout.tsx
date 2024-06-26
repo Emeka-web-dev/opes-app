@@ -19,7 +19,7 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="bg-[#fafafa] dark:bg-inherit h-full pt-[3.5rem]">
           <div className="max-w-6xl mx-auto">{children}</div>
         </div>
-        <div className="lg:hidden fixed bottom-0 inset-x-0 border-t h-[3rem] flex items-center">
+        <div className="lg:hidden fixed bottom-0 inset-x-0 border-t h-[3rem] flex items-center bg-background">
           <Footer />
         </div>
       </main>
