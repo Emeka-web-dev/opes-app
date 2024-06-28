@@ -1,5 +1,3 @@
-import React from "react";
-
 type ItemProps = {
   title: string;
   navigation?: React.ReactElement;

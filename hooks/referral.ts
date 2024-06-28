@@ -64,6 +64,20 @@ export async function calculateReferralRewards(
       },
     });
 
+    const now = new Date();
+    const month = now.getMonth() + 1;
+    const year = now.getFullYear();
+
+    await db.earningHistory.create({
+      data: {
+        payerId: user.id,
+        receiverId: referrerGen.id,
+        amount: reward,
+        month,
+        year,
+      },
+    });
+
     pusherServer.trigger("getUserData", `user:${referrerGen?.id}`, referrerGen);
 
     referrerId = referrer.referredById;

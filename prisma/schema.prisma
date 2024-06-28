@@ -122,3 +122,15 @@ model Referral {
   @@unique([referrerId, referredId])
   @@index([referrerId])
 }
+
+model EarningHistory {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  payerId    String
+  receiverId String
+
+  amount    Float
+  month     Int
+  year      Int
+  createdAt DateTime @default(now())
+}
