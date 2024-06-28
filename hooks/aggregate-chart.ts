@@ -53,9 +53,9 @@ function formatLabel(
   date: string,
   interval: "daily" | "weekly" | "monthly"
 ): string {
-  const currentDate = new Date(date);
-  const nextDay = addDays(currentDate, 1);
-  const dateObj = nextDay.toISOString();
+  const dateObj = new Date(date);
+  //   const nextDay = addDays(currentDate, 1);
+  //   const dateObj = nextDay.toISOString();
 
   if (interval === "daily") {
     return format(dateObj, "EEE"); // Mon, Tue, Wed, etc.
