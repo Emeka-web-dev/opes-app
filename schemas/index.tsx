@@ -42,3 +42,7 @@ export const NewPasswordSchema = z.object({
     message: "Minimum of 6 characters required",
   }),
 });
+
+export const InvitePeopleSchema = z.object({
+  email: z.string().email(),
+});

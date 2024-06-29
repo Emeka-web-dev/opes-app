@@ -14,22 +14,17 @@ export const sidebarIconsTop = [
     link: "/dashboard",
   },
   {
-    name: "Analytics",
-    Icon: SmsStar,
-    link: "/analytics",
-  },
-  {
-    name: "User",
+    name: "Referrals",
     Icon: Profile2User,
-    link: "/user",
+    link: "/referrals",
   },
   {
-    name: "Messages",
-    Icon: Box,
-    link: "/messages",
+    name: "Notifications",
+    Icon: SmsStar,
+    link: "/notification",
   },
   {
-    name: "Setting",
+    name: "Settings",
     Icon: Setting2,
     link: "/settings",
   },
@@ -39,14 +34,11 @@ export const Sidebar = () => {
 
   return (
     <div className="flex flex-col items-center py-4 space-y-4 h-full">
-      <div className="w-fit p-2 lg:mx-auto mx-2 rounded-full cursor-pointer">
-        <Zap className="size-6" />
-      </div>
       <div className="flex flex-col w-full flex-1 justify-center space-y-4">
         {sidebarIconsTop.map(({ name, Icon, link }) => (
           <Tooltip name={name} key={name}>
             <Link
-              href="/"
+              href={link}
               role="button"
               className="my-2 relative group flex p-1 gap-x-2"
             >

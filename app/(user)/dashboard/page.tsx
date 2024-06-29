@@ -1,5 +1,6 @@
 "use client";
 import { Balance } from "@/components/dashboard/balance";
+import { InvitePeople } from "@/components/dashboard/invite-people";
 import { Linechart } from "@/components/dashboard/line-chart";
 import {
   IntervalType,
@@ -29,36 +30,36 @@ const DashboardPage = () => {
     setSelectedValue(value);
   };
 
+  if (status === "pending") {
+    return <div>Pending...</div>;
+  }
+  if (status === "error") {
+    return <div>Pending</div>;
+  }
+
   return (
     <div className="mt-4">
       <h3 className="px-2 text-gray-700 dark:text-gray-200">
         Welcome, {session?.user?.name}
       </h3>
-      {status === "pending" && "Loading..."}
-      {status === "error" && "Error..."}
-      {status === "success" && (
-        <div>
-          <UserContainter
-            left={<Balance earning={data?.user?.earnings} />}
-            right={<ReferralLink refLink={data?.user?.invitationCode} />}
-          />
+      <div className="flex flex-col gap-y-4">
+        <UserContainter
+          left={<Balance earning={data?.user?.earnings} />}
+          right={<ReferralLink refLink={data?.user?.invitationCode} />}
+        />
 
-          <UserContainter
-            left={
-              <UserItemComponent
-                title="Earnings"
-                navigation={<LineChartDropDown onChange={onChange} />}
-              >
-                <Linechart
-                  selectedValue={selectedValue}
-                  data={data?.earnings}
-                />
-              </UserItemComponent>
-            }
-            right={<p>right</p>}
-          />
-        </div>
-      )}
+        <UserContainter
+          left={
+            <UserItemComponent
+              title="Earnings"
+              navigation={<LineChartDropDown onChange={onChange} />}
+            >
+              <Linechart selectedValue={selectedValue} data={data?.earnings} />
+            </UserItemComponent>
+          }
+          right={<InvitePeople />}
+        />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import { auth } from "@/auth";
+import { Toaster } from "sonner";
 import { SessionProviders } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
@@ -32,7 +33,10 @@ export default async function RootLayout({
             enableSystem
             storageKey="opes-app"
           >
-            <QueryProvider>{children}</QueryProvider>
+            <QueryProvider>
+              <Toaster className="z-50" position="top-center" />
+              {children}
+            </QueryProvider>
           </ThemeProvider>
         </body>
       </html>
