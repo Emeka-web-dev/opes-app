@@ -53,7 +53,6 @@ const DashboardPage = () => {
                   selectedValue={selectedValue}
                   data={data?.earnings}
                 />
-                something
               </UserItemComponent>
             }
             right={<p>right</p>}

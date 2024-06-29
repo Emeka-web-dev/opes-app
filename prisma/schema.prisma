@@ -128,9 +128,7 @@ model EarningHistory {
 
   payerId    String
   receiverId String
+  amount     Float
 
-  amount    Float
-  month     Int
-  year      Int
   createdAt DateTime @default(now())
 }
