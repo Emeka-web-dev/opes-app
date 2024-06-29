@@ -24,7 +24,7 @@ export const Navbar = () => {
         <Button variant={"outline"} className="rounded-full p-2">
           <Bell className="w-5 h-5" />
         </Button>
-        <ModeToggle />
+        {/* <ModeToggle /> */}
         <NavbarDropDownMenu user={user?.user} />
       </div>
     </div>
