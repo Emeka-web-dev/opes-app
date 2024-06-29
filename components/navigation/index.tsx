@@ -46,7 +46,7 @@ export const NavigationItems = ({ user }: any) => {
               </Button>
             )}
 
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             {pathName === "/" && <MobileToggle />}
           </div>
         </div>
