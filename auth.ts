@@ -1,23 +1,19 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth, { DefaultSession } from "next-auth";
-// import authConfig from "@/auth.config";
+import NextAuth, { Session } from "next-auth";
 import { db } from "@/lib/db";
-import authConfig from "./auth.config";
-import github from "next-auth/providers/github";
-import { getUserById } from "./data/user";
 import { PaymentPlan, UserRole } from "@prisma/client";
+import authConfig from "./auth.config";
 import { getTwoFactorConfirmationByUserId } from "./data/two-factor-comfirmation";
-// import { UserRole } from "@prisma/client";
-// import { getTwoFactorConfirmationByUserId } from "./data/two-factor-comfirmation";
+import { getUserById } from "./data/user";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider !== "credentials") return true;
+
       if (!user.id) return false;
       const existingUser = await getUserById(user.id);
       if (!existingUser?.emailVerified) return false;
-
       if (existingUser.isTwoFactorEnabled) {
         const twoFactorConfirmation = await getTwoFactorConfirmationByUserId(
           existingUser.id
@@ -30,9 +26,34 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { id: twoFactorConfirmation.id },
         });
       }
+      const expiration = Math.floor(Date.now() / 1000) + 12 * 60 * 60;
+      user.customExpiration = expiration;
       return true;
     },
+    async jwt({ token, user }) {
+      if (!token.sub) return token;
+
+      const existingUser = await getUserById(token.sub);
+
+      if (!existingUser) return token;
+
+      token.role = existingUser.role;
+      token.isSubscribed = !!existingUser.payment;
+      token.paymentPlan = existingUser.paymentPlan;
+      token.referrerId = existingUser.referredById;
+      if (user?.customExpiration) {
+        token.expiration = user.customExpiration;
+      }
+      // token.isTwoFactorEnabled = existingUser?.isTwoFactorEnabled;
+      return token;
+    },
     async session({ session, token }) {
+      const currentDate = Math.floor(Date.now() / 1000);
+      if ((token?.expiration as number) <= currentDate) {
+        await signOut({ redirectTo: "/auth/login" });
+        return null as unknown as Session;
+      }
+
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -48,22 +69,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       // }
       return session;
     },
-    async jwt({ token }) {
-      if (!token.sub) return token;
-
-      const existingUser = await getUserById(token.sub);
-
-      if (!existingUser) return token;
-
-      token.role = existingUser.role;
-      token.isSubscribed = !!existingUser.payment;
-      token.paymentPlan = existingUser.paymentPlan;
-      token.referrerId = existingUser.referredById;
-      // token.isTwoFactorEnabled = existingUser?.isTwoFactorEnabled;
-      return token;
-    },
   },
   adapter: PrismaAdapter(db),
-  session: { strategy: "jwt" },
+  session: {
+    strategy: "jwt",
+  },
   ...authConfig,
 });

@@ -9,6 +9,7 @@ import {
   publicRoute,
 } from "./routes";
 import { currentUser } from "./lib/auth";
+
 const { auth: middleware } = NextAuth(authConfig);
 
 export default middleware(async (req) => {
@@ -17,10 +18,15 @@ export default middleware(async (req) => {
   const isPaymentPlan = user?.paymentPlan!!;
 
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
+  const isLoggedIn = req.auth!!;
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoute.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+  // if (!token) {
+  //   return Response.redirect(new URL("/auth/login", nextUrl));
+  // }
+  // console.log("SOMETHING", token);
 
   if (isApiAuthRoute) return;
 
@@ -41,9 +47,9 @@ export default middleware(async (req) => {
       )
     );
   }
-  // if (!isLoggedIn) {
-  //   return Response.redirect(new URL("/auth/login", nextUrl));
-  // }
+  if (!isLoggedIn) {
+    return Response.redirect(new URL("/auth/login", nextUrl));
+  }
   return;
 });
 export const config = {
