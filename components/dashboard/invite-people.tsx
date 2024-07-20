@@ -38,7 +38,6 @@ export const InvitePeople = () => {
   const onSubmit = (values: z.infer<typeof InvitePeopleSchema>) => {
     setError("");
     setSuccess("");
-    console.log({ values });
 
     startTransition(() => {
       inviteUser(values).then((data) => {

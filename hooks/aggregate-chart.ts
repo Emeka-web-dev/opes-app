@@ -1,4 +1,4 @@
-import { EarningHistory } from "@prisma/client";
+import { EarningHistory } from "@/typings";
 import {
   addDays,
   eachDayOfInterval,

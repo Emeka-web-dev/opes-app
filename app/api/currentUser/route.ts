@@ -27,6 +27,10 @@ export async function GET(req: Request) {
       where: {
         receiverId: profile.id,
       },
+      select: {
+        amount: true,
+        createdAt: true,
+      },
     });
 
     return NextResponse.json({ earnings, user });

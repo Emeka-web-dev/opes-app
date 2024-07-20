@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MobileToggle } from "../home/mobile-toggle";
-import { ModeToggle } from "../home/modal-toggle";
 import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
 import { Button } from "../ui/button";
 import { NavigationRef } from "./navigation-ref";
@@ -13,6 +12,7 @@ export const NavigationItems = ({ user }: any) => {
   const pathName = usePathname();
   const scrollTop = useScrollTop();
   const isAuthRoute = pathName?.startsWith("/auth");
+
   return (
     <header
       className={cn(

@@ -48,12 +48,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return token;
     },
     async session({ session, token }) {
-      const currentDate = Math.floor(Date.now() / 1000);
-      if ((token?.expiration as number) <= currentDate) {
-        await signOut({ redirectTo: "/auth/login" });
-        return null as unknown as Session;
-      }
-
       if (token.sub && session.user) {
         session.user.id = token.sub;
       }
@@ -63,6 +57,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.isSubscribed = token.isSubscribed as boolean;
         session.user.paymentPlan = token.paymentPlan as PaymentPlan | null;
         session.user.referrerId = token.referrerId as string;
+        session.user.customExpiration = token?.expiration as number;
       }
       // if (session.user) {
       //   session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;

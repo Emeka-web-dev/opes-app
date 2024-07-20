@@ -1,6 +1,6 @@
 "use client";
 import { aggregateData } from "@/hooks/aggregate-chart";
-import { EarningHistory } from "@prisma/client";
+import { EarningHistory } from "@/typings";
 import { useEffect, useState } from "react";
 import {
   CartesianGrid,

@@ -11,8 +11,8 @@ export async function POST(req: Request) {
 
   const paymentPlans: Record<PaymentPlan, number> = {
     BASIC: 2000,
-    POPULAR: 3000,
-    GOLDEN: 5000,
+    POPULAR: 5000,
+    GOLDEN: 10000,
   };
 
   try {

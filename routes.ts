@@ -4,7 +4,6 @@
  * @type {string[]}
  */
 export const publicRoute = [
-  "/auth/new-verification",
   "/api/signup",
   "/api/webhook",
   "/api/pusherAuth",
@@ -22,6 +21,7 @@ export const authRoutes = [
   "/auth/error",
   "/auth/reset",
   "/auth/new-password",
+  "/auth/new-verification",
 ];
 
 /**

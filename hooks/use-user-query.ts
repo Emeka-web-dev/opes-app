@@ -1,4 +1,5 @@
-import { EarningHistory, User } from "@prisma/client";
+import { User } from "@prisma/client";
+import { EarningHistory } from "@/typings";
 import { useQuery } from "@tanstack/react-query";
 
 interface UserQuery {

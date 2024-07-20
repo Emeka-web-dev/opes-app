@@ -4,16 +4,16 @@ import { Contact } from "@/components/home/contact";
 import { Faq } from "@/components/home/faq";
 import { Guidiance } from "@/components/home/guidiance";
 import { Pricing } from "@/components/home/pricing";
+import { Navbar } from "@/components/navbar";
 import { NavigationItems } from "@/components/navigation";
 import { useSessionStore } from "@/hooks/useSessionStore";
-import { currentUser } from "@/lib/auth";
 import { redirect } from "next/navigation";
 
 export default function Home() {
   const user = useSessionStore((state) => state.session);
 
   if (user?.user?.paymentPlan) {
-    redirect("/checkout");
+    return redirect("/checkout");
   }
   return (
     <main className="scroll-smooth overflow-x-hidden">

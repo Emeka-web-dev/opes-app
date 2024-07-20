@@ -2,7 +2,8 @@ import { pusherClient } from "@/lib/pusher";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { UserData } from "./use-user-query";
-import { EarningHistory, User } from "@prisma/client";
+import { User } from "@prisma/client";
+import { EarningHistory } from "@/typings";
 
 export const useUserSocket = ({
   queryKey,
@@ -20,12 +21,14 @@ export const useUserSocket = ({
   useEffect(() => {
     pusherClient.subscribe(queryKey);
 
-    pusherClient.bind(eventId, (user: DataProps) => {
+    pusherClient.bind(eventId, (user: any) => {
       queryClient.setQueryData([queryKey], (oldData: DataProps) => {
-        console.log({ oldData, user });
         return {
           ...oldData,
-          user: user?.user,
+          user: {
+            ...oldData?.user,
+            ...user?.user,
+          },
           earnings: oldData?.earnings.concat(user?.earnings),
         };
       });

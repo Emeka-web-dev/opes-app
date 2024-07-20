@@ -5,6 +5,7 @@ import { db } from "@/lib/db";
 import { generateRefToken } from "@/lib/ref-token";
 import { calculateReferralRewards } from "@/hooks/referral";
 import { Logging, createLogging } from "@/lib/logging";
+import { PaymentPlan } from "@prisma/client";
 
 export default async function handler(
   req: NextApiRequest,
@@ -27,7 +28,7 @@ export default async function handler(
     }
 
     const userId = body.data.metadata.userId;
-    const paymentPlan = body.data.metadata.tier;
+    const paymentPlan: PaymentPlan = body.data.metadata.tier;
 
     const user = await getUserById(userId);
     if (!user) {
@@ -64,7 +65,7 @@ export default async function handler(
 
       //if user is referred
       if (user?.referredById) {
-        await calculateReferralRewards(user, amount);
+        await calculateReferralRewards(user, amount, paymentPlan);
       }
 
       console.log("Earnings distributed");

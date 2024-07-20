@@ -23,6 +23,7 @@ const DashboardPage = () => {
     apiUrl: "/api/currentUser",
     queryKey,
   });
+  console.log(data);
 
   useUserSocket({ queryKey, eventId: `user:${session?.user?.id}` });
 
