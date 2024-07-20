@@ -7,6 +7,7 @@ import {
   apiAuthPrefix,
   authRoutes,
   publicRoute,
+  userRoute,
 } from "./routes";
 import { currentUser } from "./lib/auth";
 import { signOut } from "./auth";
@@ -21,6 +22,7 @@ export default middleware(async (req) => {
 
   const { nextUrl } = req;
   const isLoggedIn = req.auth!!;
+  const isUserRoute = userRoute.includes(nextUrl.pathname);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoute.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -52,6 +54,10 @@ export default middleware(async (req) => {
   }
   if (!isLoggedIn) {
     return Response.redirect(new URL("/auth/login", nextUrl));
+  }
+
+  if (!isSubscribed && isUserRoute) {
+    return Response.redirect(new URL("/", nextUrl));
   }
 
   return;

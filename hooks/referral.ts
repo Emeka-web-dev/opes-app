@@ -2,7 +2,7 @@ import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 import { PaymentPlan, User } from "@prisma/client";
 
-const maxReferralsPerGeneration = 2;
+const MAXREFERRALSPERGENERATION = 5;
 const compensationPercentages = {
   BASIC: [50, 25, 12.5],
   POPULAR: [40, 20, 10, 5],
@@ -42,7 +42,7 @@ export async function calculateReferralRewards(
       },
     });
 
-    const referralCountLimit = referralCount > maxReferralsPerGeneration;
+    const referralCountLimit = referralCount > MAXREFERRALSPERGENERATION;
     const rewardPercentage = referralCountLimit
       ? 50
       : percentages[currentGeneration - 1];
@@ -59,7 +59,7 @@ export async function calculateReferralRewards(
       data: {
         earnings: referrer.earnings + reward,
         referralCount: referralCountNumber,
-        isWithdrawable: referralCount >= maxReferralsPerGeneration,
+        isWithdrawable: referralCount >= MAXREFERRALSPERGENERATION,
       },
       earningHistory: reward,
     });

@@ -25,6 +25,18 @@ export const authRoutes = [
 ];
 
 /**
+ * An array of routes that are use for authentication
+ * These routes will redirect subscribed user to /home
+ * @type {string[]}
+ */
+export const userRoute = [
+  "/dashboard",
+  "/notification",
+  "/settings",
+  "/referrals",
+];
+
+/**
  * The prefix for API authentication routes
  * Routes that starts with this prefix are used for API authentication purpose
  * @type {string}

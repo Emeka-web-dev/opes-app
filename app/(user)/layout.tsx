@@ -1,9 +1,15 @@
+"use client";
+
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
 import { Sidebar } from "@/components/sidebar";
+import { useSessionStore } from "@/hooks/useSessionStore";
+import { stat } from "fs";
 import React from "react";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
+  // const session = useSessionStore((state) => state.session);
+  // console.log({ session });
   return (
     <div className="flex min-h-screen relative dark:bg-[#020817]">
       {/* sidebar */}
