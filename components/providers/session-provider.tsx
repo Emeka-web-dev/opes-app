@@ -19,21 +19,17 @@ export const SessionProviders = ({
 
   useEffect(() => {
     setSession(session);
-    console.log("SESSION", session);
   }, [setSession, session]);
 
   useEffect(() => {
-    if (
-      session &&
-      session?.user?.customExpiration!! < Math.floor(Date.now() / 1000)
-    ) {
+    if (session?.user?.customExpiration!! < Math.floor(Date.now() / 1000)) {
       const signOut = async () => {
         await logout();
         window.location.reload();
       };
       signOut();
     }
-  }, [session, pathName, logout]);
+  }, [session, pathName]);
 
   return <>{children}</>;
 };
