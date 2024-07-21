@@ -26,7 +26,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           where: { id: twoFactorConfirmation.id },
         });
       }
-      const expiration = Math.floor(Date.now() / 1000) + 12 * 60 * 60;
+      const expiration = Math.floor(Date.now() / 1000) + 1 * 60;
       user.customExpiration = expiration;
       return true;
     },
