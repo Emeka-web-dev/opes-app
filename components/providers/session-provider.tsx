@@ -19,6 +19,7 @@ export const SessionProviders = ({
 
   useEffect(() => {
     setSession(session);
+    console.log("SESSION", session);
   }, [setSession, session]);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export const SessionProviders = ({
       };
       signOut();
     }
-  }, [session, pathName]);
+  }, [session, pathName, logout]);
 
   return <>{children}</>;
 };
