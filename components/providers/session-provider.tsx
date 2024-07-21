@@ -22,7 +22,10 @@ export const SessionProviders = ({
   }, [setSession, session]);
 
   useEffect(() => {
-    if (session?.user?.customExpiration!! < Math.floor(Date.now() / 1000)) {
+    if (
+      session?.user &&
+      session?.user?.customExpiration! < Math.floor(Date.now() / 1000)
+    ) {
       const signOut = async () => {
         await logout();
         window.location.reload();
