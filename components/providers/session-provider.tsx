@@ -30,7 +30,7 @@ export const SessionProviders = ({
         await logout();
         window.location.reload();
       };
-      signOut();
+      setTimeout(() => signOut(), 300);
     }
   }, [session, pathName]);
 
