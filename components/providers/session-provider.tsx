@@ -30,7 +30,9 @@ export const SessionProviders = ({
         await logout();
         window.location.reload();
       };
-      setTimeout(() => signOut(), 300);
+      signOut();
+      signOut();
+      console.log("SESSION EXPIRES");
     }
   }, [session, pathName]);
 
