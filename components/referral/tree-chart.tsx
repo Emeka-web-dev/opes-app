@@ -15,7 +15,7 @@ type DataNode = {
   data: {
     id: string;
   };
-  children?: DataNode;
+  children?: DataNode | any;
 };
 
 interface D3Node extends HierarchyPointNode<DataNode> {
