@@ -73,4 +73,14 @@
   body {
     @apply bg-background text-foreground overflow-x-hidden scroll-smooth;
   }
+
+  path {
+    fill: none;
+    stroke: black;
+  }
+
+  text {
+    text-shadow: -1px -1px 3px white, -1px 1px 3px white, 1px -1px 3px white,
+      1px 1px 3px white;
+  }
 }
