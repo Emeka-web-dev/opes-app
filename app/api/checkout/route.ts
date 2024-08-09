@@ -37,6 +37,7 @@ export async function POST(req: Request) {
     const apiRoute = "https://api.paystack.co/transaction/initialize";
 
     const selectedPlan: PaymentPlan = plan || body || "BASIC";
+
     const params = {
       email: user?.email,
       amount: paymentPlans[selectedPlan] * 100,

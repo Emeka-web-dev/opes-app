@@ -1,15 +1,14 @@
 "use client";
 
+import { useMediaQuery } from "@react-hook/media-query";
 import {
-  linkHorizontal,
-  zoom,
   hierarchy,
+  HierarchyPointNode,
+  linkHorizontal,
   select,
   tree,
-  HierarchyPointNode,
 } from "d3";
 import { useEffect, useRef } from "react";
-import { useMediaQuery } from "@react-hook/media-query";
 
 type DataNode = {
   data: {
@@ -194,14 +193,6 @@ export const TreeChart = ({ data }: TreeChartProps) => {
       // if (d.depth && d.data.data.id.length !== 7) d.children = null;
     });
     update(null, root);
-
-    //zoom behavour with contraints
-    // const zoomElement = zoom<SVGSVGElement, unknown>()
-    //   .scaleExtent([1, 1.2])
-    //   .on("zoom", (event) => {
-    //     svg.attr("transform", event.transform.toString());
-    //   });
-    // svg.call(zoomElement);
   }, [isMobile, width, data]);
 
   return (

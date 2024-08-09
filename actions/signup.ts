@@ -45,12 +45,6 @@ export const signup = async (values: z.infer<typeof SignupSchema>) => {
       data: {
         referrerId: referrer.id,
         referredId: newUser.id,
-        generation:
-          (await db.referral.count({
-            where: { referredId: referrer.id },
-          })) > 0
-            ? 2
-            : 1,
       },
     });
   }

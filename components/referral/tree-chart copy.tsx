@@ -1,12 +1,11 @@
 "use client";
 
-import { linkHorizontal, zoom, hierarchy, select, tree } from "d3";
+import { hierarchy, linkHorizontal, select, tree } from "d3";
 import { useEffect, useRef } from "react";
-
-import {} from "d3";
 
 export const TreeChart = ({ data }: any) => {
   const ref = useRef<SVGSVGElement | null>(null);
+
   // const width = document.body.clientWidth;
   const height = 750;
   // const height = 1400;

@@ -56,10 +56,6 @@ export default middleware(async (req) => {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
-  if (!isSubscribed && isUserRoute) {
-    return Response.redirect(new URL("/", nextUrl));
-  }
-
   return;
 });
 export const config = {

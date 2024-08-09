@@ -34,7 +34,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   const mailOptions = {
     from: `Opes Tech <${process.env.BREVO_USER}>`,
     to: email,
-    subject: "confirm your email",
+    subject: "Email Confirmation",
     html: `<p>Click <a href="${confirmLink}">here</a> to confirm your email</p>`,
   };
   try {

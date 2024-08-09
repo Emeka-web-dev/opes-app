@@ -59,7 +59,7 @@ export default async function handler(
         },
         data: {
           paymentPlan,
-          invitationCode: generateRefToken(6),
+          invitationCode: await generateRefToken(6),
         },
       });
 

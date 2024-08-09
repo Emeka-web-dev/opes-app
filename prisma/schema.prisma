@@ -79,9 +79,9 @@ model User {
   twoFactorConfirmation TwoFactorComfirmation?
   role                  UserRole               @default(USER)
 
+  invitationCode String?
   payment        Payment?
   paymentPlan    PaymentPlan?
-  invitationCode String?      @unique
 
   referrals    Referral[] @relation("ReferrerReferrals")
   referredBy   Referral?  @relation("ReferredUser")
@@ -116,10 +116,10 @@ model Referral {
   referrerId String @db.ObjectId
   referrer   User   @relation("ReferrerReferrals", fields: [referrerId], references: [id], onDelete: Cascade)
 
-  referredId String   @unique @db.ObjectId
-  referred   User     @relation("ReferredUser", fields: [referredId], references: [id], onDelete: Cascade)
-  generation Int
-  createdAt  DateTime @default(now())
+  referredId String @unique @db.ObjectId
+  referred   User   @relation("ReferredUser", fields: [referredId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
 
   @@unique([referrerId, referredId])
   @@index([referrerId])
