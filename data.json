@@ -357,23 +357,7 @@
           },
           "children": [
             {
-              "data": { "id": "Argentina" },
-              "children": [
-                {
-                  "data": { "id": "Bolivia" },
-                  "children": [
-                    { "data": { "id": "Bolivia" } },
-                    { "data": { "id": "Brazil" } },
-                    { "data": { "id": "Chile" } },
-                    { "data": { "id": "Colombia" } },
-                    { "data": { "id": "Ecuador" } }
-                  ]
-                },
-                { "data": { "id": "Brazil" } },
-                { "data": { "id": "Chile" } },
-                { "data": { "id": "Colombia" } },
-                { "data": { "id": "Ecuador" } }
-              ]
+              "data": { "id": "Argentina" }
             },
             { "data": { "id": "Bolivia" } },
             { "data": { "id": "Brazil" } },

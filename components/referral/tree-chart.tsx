@@ -120,7 +120,7 @@ export const TreeChart = ({ data }: TreeChartProps) => {
       nodeEnter
         .append("circle")
         .attr("r", 4)
-        .attr("fill", (d: any) => (d._children ? "#555" : "#999"));
+        .attr("fill", (d: any) => (d._children ? "#8a5ffc" : "#999"));
 
       nodeEnter
         .append("text")
@@ -191,6 +191,8 @@ export const TreeChart = ({ data }: TreeChartProps) => {
       d.id = i;
       d._children = d.children;
       // if (d.depth && d.data.data.id.length !== 7) d.children = null;
+      // console.log("DEPT", d);
+      // if (d.depth == 2) d.children = null;
     });
     update(null, root);
   }, [isMobile, width, data]);

@@ -11,7 +11,7 @@ import React from "react";
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSessionStore((state) => state.session);
   const router = useRouter();
-  if (!session?.user?.isSubscribed) {
+  if (session?.user && !session?.user?.isSubscribed) {
     return router.push("/");
   }
   return (
