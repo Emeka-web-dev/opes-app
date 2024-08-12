@@ -15,7 +15,7 @@ export type UserData = {
   status: "pending" | "error" | "success";
 };
 
-export const useUserQuery = ({ queryKey, apiUrl }: UserQuery): UserData => {
+export const useUserQuery = ({ queryKey, apiUrl }: UserQuery) => {
   const fetchUser = async () => {
     const res = await fetch(apiUrl);
     return res.json();

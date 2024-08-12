@@ -1,5 +1,6 @@
 "use client";
 
+import { UserWithReferral } from "@/app/api/getUserReferrals/route";
 import { useMediaQuery } from "@react-hook/media-query";
 import {
   hierarchy,
@@ -10,21 +11,21 @@ import {
 } from "d3";
 import { useEffect, useRef } from "react";
 
-type DataNode = {
-  data: {
-    id: string;
-  };
-  children?: DataNode | any;
-};
+// type DataNode = {
+//   data: {
+//     id: string;
+//   };
+//   children?: DataNode | any;
+// };
 
-interface D3Node extends HierarchyPointNode<DataNode> {
+interface D3Node extends HierarchyPointNode<UserWithReferral> {
   x0: number;
   y0: number;
   _children?: D3Node[];
 }
 
 type TreeChartProps = {
-  data: DataNode;
+  data: UserWithReferral;
 };
 export const TreeChart = ({ data }: TreeChartProps) => {
   const ref = useRef<SVGSVGElement | null>(null);
@@ -42,17 +43,17 @@ export const TreeChart = ({ data }: TreeChartProps) => {
     // create the svg container
     const svg = select(ref.current);
 
-    const root = hierarchy<DataNode>(data) as D3Node;
+    const root = hierarchy<UserWithReferral>(data) as D3Node;
     const dx = 15;
     const dy = (width - marginRight - marginLeft) / (1 + root.height);
 
-    const treeLayout = tree<DataNode>().nodeSize([dx, dy]);
+    const treeLayout = tree<UserWithReferral>().nodeSize([dx, dy]);
     const diagonal = linkHorizontal<
       {
-        source: HierarchyPointNode<DataNode>;
-        target: HierarchyPointNode<DataNode>;
+        source: HierarchyPointNode<UserWithReferral>;
+        target: HierarchyPointNode<UserWithReferral>;
       },
-      HierarchyPointNode<DataNode>
+      HierarchyPointNode<UserWithReferral>
     >()
       .x((d) => d.y)
       .y((d) => d.x);
@@ -129,8 +130,7 @@ export const TreeChart = ({ data }: TreeChartProps) => {
         .attr("text-anchor", (d: any) => (d._children ? "end" : "start"))
         .attr("font-size", "1.1em")
         .text((d: any) => {
-          // console.log("NAME", d);
-          return d.data.data.id;
+          return d.data.email == "empty" ? "empty" : d.data.index;
         })
         .attr("stroke-linejoin", "round")
         .attr("stroke-width", 3)
@@ -192,15 +192,10 @@ export const TreeChart = ({ data }: TreeChartProps) => {
       d._children = d.children;
       // if (d.depth && d.data.data.id.length !== 7) d.children = null;
       // console.log("DEPT", d);
-      // if (d.depth == 2) d.children = null;
+      if (d.data.email == "empty") d.children = null;
     });
     update(null, root);
   }, [isMobile, width, data]);
 
-  return (
-    <div>
-      <svg ref={ref} className="mx-auto"></svg>
-      <div>what is this</div>
-    </div>
-  );
+  return <svg ref={ref} className="mx-auto"></svg>;
 };
