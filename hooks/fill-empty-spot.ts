@@ -5,21 +5,29 @@ export function fillEmptySpots(
   maxReferrals: number = 5,
   generations: number = 3
 ): UserWithReferral {
-  if (generations <= 0) return user;
+  const userTree: UserWithReferral = {
+    ...user,
+    children: user.children.map((child) => ({ ...child })),
+  };
 
-  const filledReferrals = [...user.children];
+  if (generations <= 0) return userTree;
+
+  const filledReferrals = [...userTree.children];
 
   while (filledReferrals.length < maxReferrals) {
     filledReferrals.push({
       email: "empty",
       index: 0,
+      name: "empty",
       children: [],
     });
   }
 
-  user.children = filledReferrals.map((referral) =>
+  userTree.children = filledReferrals.map((referral) =>
     fillEmptySpots(referral, maxReferrals, generations - 1)
   );
 
-  return user;
+  //   console.log(userTree);
+
+  return userTree;
 }

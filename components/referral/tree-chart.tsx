@@ -11,13 +11,6 @@ import {
 } from "d3";
 import { useEffect, useRef } from "react";
 
-// type DataNode = {
-//   data: {
-//     id: string;
-//   };
-//   children?: DataNode | any;
-// };
-
 interface D3Node extends HierarchyPointNode<UserWithReferral> {
   x0: number;
   y0: number;
@@ -121,7 +114,13 @@ export const TreeChart = ({ data }: TreeChartProps) => {
       nodeEnter
         .append("circle")
         .attr("r", 4)
-        .attr("fill", (d: any) => (d._children ? "#8a5ffc" : "#999"));
+        .attr("fill", (d: any) => {
+          return d._children
+            ? d.data.index !== 0
+              ? "#8a5ffc"
+              : "#1c223b"
+            : "#999";
+        });
 
       nodeEnter
         .append("text")
@@ -130,7 +129,11 @@ export const TreeChart = ({ data }: TreeChartProps) => {
         .attr("text-anchor", (d: any) => (d._children ? "end" : "start"))
         .attr("font-size", "1.1em")
         .text((d: any) => {
-          return d.data.email == "empty" ? "empty" : d.data.index;
+          return d.data.email == "empty"
+            ? "empty"
+            : d.data.index == 1
+            ? d.data.index + "(me)"
+            : d.data.index;
         })
         .attr("stroke-linejoin", "round")
         .attr("stroke-width", 3)
@@ -190,12 +193,10 @@ export const TreeChart = ({ data }: TreeChartProps) => {
     root.descendants().forEach((d: any, i: any) => {
       d.id = i;
       d._children = d.children;
-      // if (d.depth && d.data.data.id.length !== 7) d.children = null;
-      // console.log("DEPT", d);
       if (d.data.email == "empty") d.children = null;
     });
     update(null, root);
   }, [isMobile, width, data]);
 
-  return <svg ref={ref} className="mx-auto"></svg>;
+  return <svg ref={ref} className="mx-auto py-4"></svg>;
 };

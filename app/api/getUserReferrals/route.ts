@@ -1,3 +1,4 @@
+import { collectAndSortByIndex } from "@/hooks/collect-and-sort-by-index";
 import { currentUser } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
@@ -6,6 +7,7 @@ export interface UserWithReferral {
   invitationCode?: string | null;
   email: string | null;
   index: number;
+  name: string | null;
   children: UserWithReferral[];
 }
 
@@ -49,6 +51,7 @@ export async function GET(req: Request) {
 
     return {
       email: user.email,
+      name: user.name,
       invitationCode: user.invitationCode,
       index: userIndex,
       children: referrals,
@@ -64,6 +67,7 @@ export async function GET(req: Request) {
 
     const currentIndex = { value: 1 };
     const getReferral = await getReferrals(profile?.id!, currentIndex);
+    // const dataTable = collectAndSortByIndex(gerR)
 
     return NextResponse.json(getReferral);
   } catch (error) {

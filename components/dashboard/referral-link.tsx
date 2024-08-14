@@ -7,9 +7,11 @@ import { Check, Copy } from "lucide-react";
 type ReferralLinkProps = {
   refLink: string | null | undefined;
 };
+export const urlLink = (refCode: string) =>
+  `${process.env.NEXT_PUBLIC_SITE_URL!}?ref=${refCode}`;
 export const ReferralLink = ({ refLink }: ReferralLinkProps) => {
   const [copied, setCopied] = useState(false);
-  const link = `${process.env.NEXT_PUBLIC_SITE_URL!}?ref=${refLink}`;
+  const link = urlLink(refLink || "empty");
   const onCopy = () => {
     navigator.clipboard.writeText(link);
     setCopied(true);
