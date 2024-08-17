@@ -44,7 +44,12 @@ const DashboardPage = () => {
       </h3>
       <div className="flex flex-col gap-y-4">
         <UserContainter
-          left={<Balance earning={data?.user?.earnings} />}
+          left={
+            <Balance
+              earning={data?.user?.earnings}
+              withdrawableEarning={data?.user?.withdrawableEarnings}
+            />
+          }
           right={<ReferralLink refLink={data?.user?.invitationCode} />}
         />
 

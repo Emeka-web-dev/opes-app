@@ -87,9 +87,10 @@ model User {
   referredBy   Referral?  @relation("ReferredUser")
   referredById String?    @db.ObjectId
 
-  earnings       Float   @default(0.0)
-  isWithdrawable Boolean @default(false)
-  referralCount  Int     @default(0)
+  earnings             Float           @default(0.0)
+  withdrawableEarnings Float           @default(0.0)
+  referralCountGen     ReferralCount[]
+  referralCount        Int             @default(0)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -133,4 +134,19 @@ model EarningHistory {
   amount     Float
 
   createdAt DateTime @default(now())
+}
+
+model ReferralCount {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  generation Int
+  count      Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, generation])
 }

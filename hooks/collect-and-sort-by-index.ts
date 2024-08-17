@@ -2,7 +2,7 @@ import { UserWithReferral } from "@/app/api/getUserReferrals/route";
 
 export interface UserWithoutReferrals {
   name: string;
-  email: string;
+  // email: string;
   index: number;
   invitationCode: string;
 }
@@ -15,7 +15,6 @@ export const collectAndSortByIndex = (
   function transverse(user: UserWithReferral) {
     result.push({
       name: user.name!,
-      email: user.email!,
       index: user.index,
       invitationCode: user.invitationCode!,
     });

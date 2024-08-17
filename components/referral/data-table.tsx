@@ -35,7 +35,7 @@ export function DataTable({ data }: Props) {
               Index
             </TableHead>
             <TableHead className="font-bold text-gray-600 text-md">
-              Email
+              Name
             </TableHead>
             <TableHead className="font-bold text-gray-600 text-md">
               Ref Link
@@ -50,7 +50,7 @@ export function DataTable({ data }: Props) {
               </TableCell>
 
               <TableCell className="max-w-44 sm:w-fit">
-                <p className="truncate">{info.email}</p>
+                <p className="truncate">{info.name}</p>
               </TableCell>
               <TableCell className="flex space-x-2 items-center">
                 <p className="hidden md:inline-flex">

@@ -129,7 +129,7 @@ export const TreeChart = ({ data }: TreeChartProps) => {
         .attr("text-anchor", (d: any) => (d._children ? "end" : "start"))
         .attr("font-size", "1.1em")
         .text((d: any) => {
-          return d.data.email == "empty"
+          return d.data.name == "empty"
             ? "empty"
             : d.data.index == 1
             ? d.data.index + "(me)"
@@ -193,7 +193,7 @@ export const TreeChart = ({ data }: TreeChartProps) => {
     root.descendants().forEach((d: any, i: any) => {
       d.id = i;
       d._children = d.children;
-      if (d.data.email == "empty") d.children = null;
+      if (d.data.name == "empty") d.children = null;
     });
     update(null, root);
   }, [isMobile, width, data]);

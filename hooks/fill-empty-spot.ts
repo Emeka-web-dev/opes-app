@@ -16,7 +16,6 @@ export function fillEmptySpots(
 
   while (filledReferrals.length < maxReferrals) {
     filledReferrals.push({
-      email: "empty",
       index: 0,
       name: "empty",
       children: [],
@@ -26,8 +25,6 @@ export function fillEmptySpots(
   userTree.children = filledReferrals.map((referral) =>
     fillEmptySpots(referral, maxReferrals, generations - 1)
   );
-
-  //   console.log(userTree);
 
   return userTree;
 }

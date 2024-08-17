@@ -1,3 +1,5 @@
+import { calculateExponentialUser } from "@/lib/calculateExponentialUser";
+import { createOrUpdateReferralCount } from "@/lib/createOrUpdateReferralCount";
 import { db } from "@/lib/db";
 import { pusherServer } from "@/lib/pusher";
 import { PaymentPlan, User } from "@prisma/client";
@@ -31,18 +33,17 @@ export async function calculateReferralRewards(
 
     if (!referrer || !referrer.payment) break;
 
-    const referralCount = await db.referral.count({
-      where: {
-        referrerId: referrer.id,
-        referred: {
-          payment: {
-            isNot: null,
-          },
-        },
-      },
-    });
+    const referralCount = await createOrUpdateReferralCount(
+      referrer.id,
+      currentGeneration
+    );
 
-    const referralCountLimit = referralCount > MAXREFERRALSPERGENERATION;
+    const calculatedExponential = calculateExponentialUser(
+      MAXREFERRALSPERGENERATION,
+      currentGeneration
+    );
+
+    const referralCountLimit = referralCount > calculatedExponential;
     const rewardPercentage = referralCountLimit
       ? 50
       : percentages[currentGeneration - 1];
@@ -54,12 +55,23 @@ export async function calculateReferralRewards(
     const referralCountNumber =
       referrer.referralCount + (!referralCountLimit ? 1 : 0);
 
+    const withdrawableEarnings =
+      calculatedExponential == referralCount
+        ? calculatedExponential * reward
+        : 0;
+
+    // If it exceed the reflimit
+    const withdrawableOverflow = referralCountLimit ? reward : 0;
+
     updates.push({
       id: referrer.id,
       data: {
         earnings: referrer.earnings + reward,
+        withdrawableEarnings:
+          referrer.withdrawableEarnings +
+          withdrawableOverflow +
+          withdrawableEarnings,
         referralCount: referralCountNumber,
-        isWithdrawable: referralCount >= MAXREFERRALSPERGENERATION,
       },
       earningHistory: reward,
     });
