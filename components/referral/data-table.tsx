@@ -11,6 +11,7 @@ import { UserWithoutReferrals } from "@/hooks/collect-and-sort-by-index";
 import { Check, Link } from "lucide-react";
 import { useState } from "react";
 import { urlLink } from "../dashboard/referral-link";
+import { toast } from "sonner";
 
 type Props = {
   data: UserWithoutReferrals[];
@@ -20,6 +21,7 @@ export function DataTable({ data }: Props) {
 
   const onCopy = (index: number, code: string) => {
     navigator.clipboard.writeText(code);
+    toast.success("Link Copied");
     setCopied(index);
 
     setTimeout(() => {

@@ -41,9 +41,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       token.isSubscribed = !!existingUser.payment;
       token.paymentPlan = existingUser.paymentPlan;
       token.referrerId = existingUser.referredById;
+      token.invitationCode = existingUser?.invitationCode;
       if (user?.customExpiration) {
         token.expiration = user.customExpiration;
       }
+
       // token.isTwoFactorEnabled = existingUser?.isTwoFactorEnabled;
       return token;
     },
@@ -58,7 +60,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.paymentPlan = token.paymentPlan as PaymentPlan | null;
         session.user.referrerId = token.referrerId as string;
         session.user.customExpiration = token?.expiration as number;
+        session.user.invitationCode = token.invitationCode as string;
       }
+      // console.log(token.refLInk);
       // if (session.user) {
       //   session.user.isTwoFactorEnabled = token.isTwoFactorEnabled as boolean;
       // }

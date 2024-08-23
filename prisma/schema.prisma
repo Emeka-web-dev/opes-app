@@ -92,6 +92,8 @@ model User {
   referralCountGen     ReferralCount[]
   referralCount        Int             @default(0)
 
+  bankDetails BankDetails?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -149,4 +151,21 @@ model ReferralCount {
   updatedAt DateTime @updatedAt
 
   @@unique([userId, generation])
+}
+
+model BankDetails {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  accountName   String
+  accountNumber Int
+  bankName      String
+  bankCode      Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId])
 }

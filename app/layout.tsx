@@ -34,7 +34,7 @@ export default async function RootLayout({
             storageKey="opes-app"
           >
             <QueryProvider>
-              <Toaster className="z-50" position="top-center" />
+              <Toaster className="z-50" position="top-center" duration={1000} />
               {children}
             </QueryProvider>
           </ThemeProvider>

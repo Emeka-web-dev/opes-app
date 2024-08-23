@@ -5,7 +5,6 @@ type BalanceProps = {
   withdrawableEarning: number | undefined;
 };
 export const Balance = ({ earning, withdrawableEarning }: BalanceProps) => {
-  console.log({ withdrawableEarning });
   const balance = useCurrencyFormatter(earning);
   const withdrawableBalance = useCurrencyFormatter(withdrawableEarning);
 

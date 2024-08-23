@@ -9,6 +9,7 @@ export type ExtendedUser =
       paymentPlan: PaymentPlan | null;
       referrerId: string;
       expiration?: number;
+      invitationCode: string;
       // customExpiration?: string;
     };
 declare module "next-auth" {
