@@ -26,20 +26,12 @@ export async function GET(req: Request) {
       },
     });
 
-    // const bankData: BankData[] = [];
     const response = await axios.get(url, {
       headers: {
         Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY!}`,
         "Content-Type": "application/json",
       },
     });
-
-    // response.data.data.map((data: any) => {
-    //   bankData.push({
-    //     name: data.name,
-    //     code: Number(data.code),
-    //   });
-    // });
 
     return NextResponse.json(response.data);
   } catch (error) {

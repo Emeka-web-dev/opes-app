@@ -1,7 +1,10 @@
 "use client";
 
+import { resolveAccount } from "@/actions/resolve-account";
+import { sendOpt } from "@/actions/send-opt";
+import { FormError } from "@/components/form-error";
+import { FormSuccess } from "@/components/form-success";
 import { Button } from "@/components/ui/button";
-import qs from "query-string";
 import {
   Command,
   CommandEmpty,
@@ -25,31 +28,34 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useUserQuery } from "@/hooks/use-user-query";
+import { useModal } from "@/hooks/useModalStore";
+import { useSessionStore } from "@/hooks/useSessionStore";
 import { BankDetailSchema } from "@/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { useEffect, useState, useTransition } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import axios from "axios";
-import { resolveAccount } from "@/actions/resolve-account";
-import { FormSuccess } from "@/components/form-success";
-import { FormError } from "@/components/form-error";
 
 type BankData = z.infer<typeof BankDetailSchema>["bankName"];
 const BankPage = () => {
+  const session = useSessionStore((data) => data.session);
+  const { onOpen, data: storeDate, onUpdateClose } = useModal();
   const queryKey = "getBanks";
   const { data, status } = useUserQuery({
     apiUrl: "/api/bank/getBank",
     queryKey,
   });
 
+  const bankData = data?.bankData;
+  const bankDetails = data?.bankDetails;
+
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState<BankData | null>(null);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isVerified, setIsVerified] = useState(false);
 
   const form = useForm<z.infer<typeof BankDetailSchema>>({
     resolver: zodResolver(BankDetailSchema),
@@ -61,35 +67,72 @@ const BankPage = () => {
 
   const { handleSubmit, watch, setValue: setFormValue, getValues } = form;
 
-  // Watch bankNumber field
-  const bankNumber = watch("bankNumber");
+  useEffect(() => {
+    if (bankDetails) {
+      setFormValue("bankName", {
+        name: bankDetails?.bankName,
+        code: Number(bankDetails?.bankCode),
+      }),
+        setValue({
+          name: bankDetails?.bankName,
+          code: Number(bankDetails?.bankCode),
+        });
+
+      onUpdateClose();
+      setSuccess(bankDetails?.accountName);
+      setFormValue("bankNumber", Number(bankDetails?.accountNumber));
+    }
+  }, [bankDetails, setFormValue, onUpdateClose]);
+
+  const bankName = getValues("bankName");
+  const bankNumber = getValues("bankNumber");
 
   useEffect(() => {
-    if (bankNumber?.toString().length === 10) {
-      handleSubmit(onSubmit)();
-    } else {
-      setError("");
-      setSuccess("");
-      setIsDisabled(true);
-    }
-  }, [bankNumber, handleSubmit]);
+    setIsVerified(false);
+    // setSuccess("");
+    setError("");
+  }, [bankName, bankNumber]);
 
   const onSubmit = (value: z.infer<typeof BankDetailSchema>) => {
-    startTransition(() => {
-      resolveAccount(value).then((data) => {
-        if (data?.error) setError(data.error);
-        if (data?.data) {
-          setSuccess(data.data.account_name);
-          setIsDisabled(false);
-        }
-      });
+    setError("");
+    // setSuccess("");
+    startTransition(async () => {
+      if (!isVerified) {
+        setSuccess("");
+        resolveAccount(value).then((data) => {
+          if (data?.error) setError(data.error);
+          if (data?.data) {
+            setSuccess(data.data.account_name);
+            setIsVerified(true);
+            // setIsDisabled(false);
+          }
+        });
+      } else {
+        sendOpt(session?.user?.email!).then((data) => {
+          if (data.success) {
+            onOpen("updateAccountNumber", {
+              createOrUpdate: {
+                accountName: success!,
+                userId: session?.user?.id!,
+                value,
+              },
+            });
+          }
+
+          if (data.error) {
+            setError(data.error);
+          }
+        });
+      }
     });
   };
 
-  const onSave = () => {
-    console.log("bankName", getValues("bankName"));
-    console.log("bankNumber", getValues("bankNumber"));
-  };
+  if (status === "pending") {
+    return <div>pending</div>;
+  }
+  if (status === "error") {
+    return <div>Error</div>;
+  }
 
   return (
     <div className="max-w-2xl mx-auto bg-white">
@@ -126,11 +169,8 @@ const BankPage = () => {
                           <CommandList>
                             <CommandEmpty>No framework found.</CommandEmpty>
                             <CommandGroup>
-                              {status == "pending" && (
-                                <CommandItem>Loading</CommandItem>
-                              )}
-                              {data &&
-                                data.map((bank: BankData) => (
+                              {bankData &&
+                                bankData.map((bank: BankData) => (
                                   <CommandItem
                                     key={bank?.name}
                                     value={bank?.name}
@@ -181,15 +221,25 @@ const BankPage = () => {
             />
           </div>
           {isPending && <Loader2 className="size-4 animate-spin" />}
-          <FormError message={error} />
-          <FormSuccess message={success} />
+          <div className="flex flex-col space-y-2">
+            <FormSuccess message={success} />
+            <FormError message={error} />
+          </div>
+          <Button
+            className="w-full mt-4"
+            type="submit"
+            disabled={isPending || storeDate?.isUpdate}
+          >
+            {isPending ? (
+              <Loader2 className="size-5 animate-spin" />
+            ) : isVerified ? (
+              "Update Bank Details"
+            ) : (
+              "Verify Account"
+            )}
+          </Button>
         </form>
       </Form>
-      <div className="p-4">
-        <Button className="w-full" disabled={isDisabled} onClick={onSave}>
-          Update Bank Details
-        </Button>
-      </div>
     </div>
   );
 };

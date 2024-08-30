@@ -16,24 +16,25 @@ export const SessionProviders = ({
 }) => {
   const pathName = usePathname();
   const setSession = useSessionStore((state) => state.setSession);
+  // const getSession = useSessionStore((state) => state.session);
 
   useEffect(() => {
     setSession(session);
   }, [setSession, session]);
 
-  useEffect(() => {
-    if (
-      session?.user &&
-      session?.user?.customExpiration! < Math.floor(Date.now() / 1000)
-    ) {
-      const signOut = async () => {
-        await logout();
-        window.location.reload();
-      };
-      signOut();
-      signOut();
-    }
-  }, [session, pathName]);
+  // useEffect(() => {
+  //   if (
+  //     session?.user &&
+  //     session?.user?.customExpiration! < Math.floor(Date.now() / 1000)
+  //   ) {
+  //     const signOut = async () => {
+  //       await logout();
+  //       window.location.reload();
+  //     };
+  //     signOut();
+  //     signOut();
+  //   }
+  // }, [session, pathName]);
 
   return <>{children}</>;
 };

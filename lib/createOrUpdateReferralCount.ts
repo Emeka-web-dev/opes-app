@@ -4,40 +4,24 @@ export async function createOrUpdateReferralCount(
   userId: string,
   generation: number
 ): Promise<number> {
-  const existingReferralCount = await db.referralCount.findUnique({
+  const data = await db.referralCount.upsert({
     where: {
       userId_generation: {
         userId,
         generation,
       },
     },
+    update: {
+      count: {
+        increment: 1,
+      },
+    },
+    create: {
+      userId,
+      generation,
+      count: 1,
+    },
   });
 
-  if (existingReferralCount) {
-    // Update the existing count
-    const updatedReferralCount = await db.referralCount.update({
-      where: {
-        userId_generation: {
-          userId,
-          generation,
-        },
-      },
-      data: {
-        count: existingReferralCount.count + 1,
-      },
-    });
-
-    return updatedReferralCount.count;
-  } else {
-    // Create a new referral count entry
-    const newReferralCount = await db.referralCount.create({
-      data: {
-        userId,
-        generation,
-        count: 1,
-      },
-    });
-
-    return newReferralCount.count;
-  }
+  return data.count;
 }

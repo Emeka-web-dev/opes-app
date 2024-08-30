@@ -1,4 +1,5 @@
 import { currentUser } from "@/lib/auth";
+import { db } from "@/lib/db";
 import { BankData } from "@/typings";
 import axios from "axios";
 import { NextResponse } from "next/server";
@@ -38,7 +39,13 @@ export async function GET(req: Request) {
       });
     });
 
-    return NextResponse.json(bankData);
+    const bankDetails = await db.bankDetails.findUnique({
+      where: {
+        userId: user.id,
+      },
+    });
+
+    return NextResponse.json({ bankData, bankDetails });
   } catch (error) {
     console.log("INTERNAL_ERROR", error);
     return new NextResponse("Internal Error", { status: 500 });

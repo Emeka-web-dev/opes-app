@@ -49,8 +49,8 @@ export const sendTwoFactorTokenEmail = async (email: string, token: string) => {
   const mailOptions = {
     from: `Opes Tech <${process.env.BREVO_USER}>`,
     to: email,
-    subject: "2FA Code",
-    html: `<p>Your 2FA Code: ${token}</p>`,
+    subject: "OTP Code",
+    html: `<p>Your OTP Code: ${token}</p>`,
   };
   try {
     const info = await transporter.sendMail(mailOptions);

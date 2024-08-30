@@ -160,9 +160,9 @@ model BankDetails {
   userId String @db.ObjectId
 
   accountName   String
-  accountNumber Int
+  accountNumber String
   bankName      String
-  bankCode      Int
+  bankCode      String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
