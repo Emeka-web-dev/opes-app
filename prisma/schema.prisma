@@ -163,6 +163,7 @@ model BankDetails {
   accountNumber String
   bankName      String
   bankCode      String
+  recipientCode String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

@@ -78,4 +78,10 @@
     text-shadow: -1px -1px 3px white, -1px 1px 3px white, 1px -1px 3px white,
       1px 1px 3px white;
   }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
