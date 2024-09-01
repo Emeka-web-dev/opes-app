@@ -2,7 +2,6 @@
 import { Bell } from "lucide-react";
 import Link from "next/link";
 
-import { useSessionStore } from "@/hooks/useSessionStore";
 import { ModeToggle } from "./home/modal-toggle";
 import { NavbarDropDownMenu } from "./navbar-dropDownMenu";
 import { Button } from "./ui/button";
