@@ -1,35 +1,41 @@
-import { useEffect } from "react";
+import { pusherClient } from "@/lib/pusher";
 import { useQueryClient } from "@tanstack/react-query";
-import { Referral, User } from "@prisma/client";
-import { useSocket } from "@/components/providers/socket-provider";
+import { useEffect } from "react";
+import { UserData } from "./use-user-query";
+import { User } from "@prisma/client";
+import { EarningHistory } from "@/typings";
 
-type UserWithReferrals = User & {
-  referrals: Referral[];
-};
-
-export const useUserSocket = ({ queryKey }: { queryKey: string }) => {
-  const { socket } = useSocket();
+export const useUserSocket = ({
+  queryKey,
+  eventId,
+}: {
+  queryKey: string;
+  eventId: string;
+}) => {
   const queryClient = useQueryClient();
 
+  type DataProps = {
+    earnings: EarningHistory[];
+    user: User;
+  };
   useEffect(() => {
-    if (!socket) {
-      return;
-    }
+    pusherClient.subscribe(queryKey);
 
-    socket.on(queryKey, (user: any) => {
-      queryClient.setQueryData([queryKey], (oldData: any) => {
-        console.log({
-          oldData,
-          user,
-        });
+    pusherClient.bind(eventId, (user: any) => {
+      queryClient.setQueryData([queryKey], (oldData: DataProps) => {
         return {
-          ...user,
+          ...oldData,
+          user: {
+            ...oldData?.user,
+            ...user?.user,
+          },
+          earnings: oldData?.earnings.concat(user?.earnings),
         };
       });
     });
 
     return () => {
-      socket.off(queryKey);
+      pusherClient.unsubscribe(queryKey);
     };
-  }, [queryClient, queryKey, socket]);
+  }, [queryKey, queryClient, eventId]);
 };

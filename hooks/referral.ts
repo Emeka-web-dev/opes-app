@@ -1,75 +1,108 @@
+import { calculateExponentialUser } from "@/lib/calculateExponentialUser";
+import { createOrUpdateReferralCount } from "@/lib/createOrUpdateReferralCount";
 import { db } from "@/lib/db";
-import { NextApiResponseServerIo } from "@/types";
-import { User } from "@prisma/client";
+import { pusherServer } from "@/lib/pusher";
+import { PaymentPlan, User } from "@prisma/client";
 
-const maxReferralsPerGeneration = 2;
+const MAXREFERRALSPERGENERATION = 5;
+const compensationPercentages = {
+  BASIC: [50, 25, 12.5],
+  POPULAR: [40, 20, 10, 5],
+  GOLDEN: [30, 20, 10, 5, 2.5],
+};
 
 export async function calculateReferralRewards(
   user: User,
   amount: number,
-  res: NextApiResponseServerIo
+  paymentPlan: PaymentPlan
 ): Promise<void> {
+  const percentages = compensationPercentages[paymentPlan];
+  const maxGenerations = percentages.length;
   let currentGeneration = 1;
   let referrerId = user.referredById;
 
-  while (referrerId && currentGeneration <= 3) {
+  const updates = [];
+
+  while (referrerId && currentGeneration <= maxGenerations) {
     const referrer = await db.user.findUnique({
       where: { id: referrerId },
       include: {
         payment: true,
       },
     });
-    if (!referrer || !referrer.payment) {
-      console.log("Refer user not paid", referrer);
-      break;
-    }
 
-    const referralCount = await db.referral.count({
-      where: {
-        referrerId: referrer.id,
-        referred: {
-          payment: {
-            isNot: null,
-          },
-        },
-      },
-    });
+    if (!referrer || !referrer.payment) break;
 
-    if (referralCount > maxReferralsPerGeneration) {
-      console.log("Reach limit");
-      break;
-    }
+    const referralCount = await createOrUpdateReferralCount(
+      referrer.id,
+      currentGeneration
+    );
 
-    let rewardPercentage = 0;
-    switch (currentGeneration) {
-      case 1:
-        rewardPercentage = 50;
-        break;
-      case 2:
-        rewardPercentage = 25;
-        break;
-      case 3:
-        rewardPercentage = 12.5;
-        break;
-    }
+    const calculatedExponential = calculateExponentialUser(
+      MAXREFERRALSPERGENERATION,
+      currentGeneration
+    );
 
+    const referralCountLimit = referralCount > calculatedExponential;
+    const rewardPercentage = referralCountLimit
+      ? 50
+      : percentages[currentGeneration - 1];
+
+    // calculate reward
     const reward = (amount * rewardPercentage) / 100;
 
-    const parentUser = await db.user.update({
-      where: { id: referrer.id },
+    // total number of referral
+    const referralCountNumber =
+      referrer.referralCount + (!referralCountLimit ? 1 : 0);
+
+    const withdrawableEarnings =
+      calculatedExponential == referralCount
+        ? calculatedExponential * reward
+        : 0;
+
+    // If it exceed the reflimit
+    const withdrawableOverflow = referralCountLimit ? reward : 0;
+
+    updates.push({
+      id: referrer.id,
       data: {
         earnings: referrer.earnings + reward,
+        withdrawableEarnings:
+          referrer.withdrawableEarnings +
+          withdrawableOverflow +
+          withdrawableEarnings,
+        referralCount: referralCountNumber,
       },
-      include: {
-        referrals: true,
-      },
+      earningHistory: reward,
     });
 
-    const querykey = `user:${parentUser.id}`;
-
-    res?.socket?.server?.io?.emit(querykey, parentUser);
+    if (referralCountLimit) break;
 
     referrerId = referrer.referredById;
     currentGeneration++;
   }
+
+  const currentDate = new Date().toISOString();
+
+  await Promise.all(
+    updates.map(({ id, data, earningHistory }) => {
+      db.$transaction([
+        db.user.update({
+          where: { id },
+          data,
+        }),
+        db.earningHistory.create({
+          data: {
+            amount: earningHistory,
+            payerId: user.id,
+            receiverId: id,
+          },
+        }),
+      ]);
+      pusherServer.trigger("getUserData", `user:${id}`, {
+        user: data,
+        earnings: [{ amount: earningHistory, createdAt: currentDate }],
+      });
+    })
+  );
 }

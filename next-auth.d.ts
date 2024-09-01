@@ -1,15 +1,22 @@
 import { PaymentPlan, UserRole } from "@prisma/client";
-import NextAuth, { type DefaultSession } from "next-auth";
+import NextAuth, { type DefaultSession, type User } from "next-auth";
 
-export type ExtendedUser = DefaultSession["user"] & {
-  role: UserRole;
-  isTwoFactorEnabled: boolean;
-  isSubscribed: boolean;
-  paymentPlan: PaymentPlan | null;
-  referrerId: string;
-};
+export type ExtendedUser =
+  | DefaultSession["user"] & {
+      role: UserRole;
+      isTwoFactorEnabled: boolean;
+      isSubscribed: boolean;
+      paymentPlan: PaymentPlan | null;
+      referrerId: string;
+      expiration?: number;
+      invitationCode: string;
+      // customExpiration?: string;
+    };
 declare module "next-auth" {
   interface Session {
-    user: ExtendedUser;
+    user?: ExtendedUser;
+  }
+  interface User {
+    customExpiration?: number;
   }
 }

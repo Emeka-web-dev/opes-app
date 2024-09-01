@@ -1,10 +1,20 @@
-export function generateRefToken(length: number): string {
-  const characters =
+import { db } from "./db";
+
+export async function generateRefToken(length: number): Promise<string> {
+  const charset =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  let code;
+  while (true) {
+    code = Array.from(
+      { length },
+      () => charset[Math.floor(Math.random() * charset.length)]
+    ).join("");
+
+    const existingUser = await db.user.findFirst({
+      where: { invitationCode: code },
+    });
+
+    if (!existingUser) break; // Code is unique
   }
-  return result;
+  return code;
 }

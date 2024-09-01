@@ -23,7 +23,17 @@ export async function GET(req: Request) {
       },
     });
 
-    return NextResponse.json(user);
+    const earnings = await db.earningHistory.findMany({
+      where: {
+        receiverId: profile.id,
+      },
+      select: {
+        amount: true,
+        createdAt: true,
+      },
+    });
+
+    return NextResponse.json({ earnings, user });
   } catch (error) {
     console.log("[CURRENT_USER]", error);
     return new NextResponse("Internal Error", { status: 500 });

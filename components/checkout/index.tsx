@@ -36,8 +36,6 @@ export function Checkout({ user }: CheckoutProps) {
     return Object.values(PaymentPlan).includes(value);
   };
 
-  console.log(user?.paymentPlan);
-
   if (!user?.paymentPlan && !isPaymentPlan(plan)) {
     return redirect("/");
   }

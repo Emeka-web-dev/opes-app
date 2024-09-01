@@ -34,7 +34,7 @@ export const getUserById = async (id: string) => {
 
 export const getUserByRefToken = async (invitationCode: string) => {
   try {
-    const user = await db.user.findUnique({
+    const user = await db.user.findFirst({
       where: {
         invitationCode,
       },

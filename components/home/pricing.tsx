@@ -14,19 +14,19 @@ export const Pricing = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4">
           <PricingContainer
             name="Basic Plan"
-            amount="2000"
+            amount="2,000"
             url={`/checkout?plan=${Tier.BASIC}`}
             points={["Life time free updates!", "Unlimited transactions"]}
           />
           <PricingContainer
             name="Popular Plan"
-            amount="3000"
+            amount="5,000"
             url={`/checkout?plan=${Tier.POPULAR}`}
             points={["Life time free updates!", "Unlimited transactions"]}
           />
           <PricingContainer
             name="Goldern Plan"
-            amount="5000"
+            amount="10,000"
             url={`/checkout?plan=${Tier.GOLDEN}`}
             points={["Life time free updates!", "Unlimited transactions"]}
           />

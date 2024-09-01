@@ -4,7 +4,6 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { MobileToggle } from "../home/mobile-toggle";
-import { ModeToggle } from "../home/modal-toggle";
 import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
 import { Button } from "../ui/button";
 import { NavigationRef } from "./navigation-ref";
@@ -16,7 +15,7 @@ export const NavigationItems = ({ user }: any) => {
   return (
     <header
       className={cn(
-        "fixed h-[3.8rem] md:h-[4.5rem] top-0 w-screen z-50 bg-white/80 dark:bg-[#1d2144]/80 backdrop-blur-lg flex items-center",
+        "fixed h-[3.8rem] md:h-[4.5rem] top-0 w-screen z-50 bg-white/80 dark:bg-background/80 backdrop-blur-lg flex items-center",
         isAuthRoute && "shadow-md",
         scrollTop && "shadow-md"
       )}
@@ -46,7 +45,7 @@ export const NavigationItems = ({ user }: any) => {
               </Button>
             )}
 
-            <ModeToggle />
+            {/* <ModeToggle /> */}
             {pathName === "/" && <MobileToggle />}
           </div>
         </div>

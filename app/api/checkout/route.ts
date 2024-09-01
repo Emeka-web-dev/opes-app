@@ -11,8 +11,8 @@ export async function POST(req: Request) {
 
   const paymentPlans: Record<PaymentPlan, number> = {
     BASIC: 2000,
-    POPULAR: 3000,
-    GOLDEN: 5000,
+    POPULAR: 5000,
+    GOLDEN: 10000,
   };
 
   try {
@@ -37,6 +37,7 @@ export async function POST(req: Request) {
     const apiRoute = "https://api.paystack.co/transaction/initialize";
 
     const selectedPlan: PaymentPlan = plan || body || "BASIC";
+
     const params = {
       email: user?.email,
       amount: paymentPlans[selectedPlan] * 100,

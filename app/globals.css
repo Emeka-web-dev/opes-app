@@ -36,7 +36,7 @@
   }
 
   .dark {
-    --background: 225 58% 12%;
+    --background: 221 100% 9%;
     --foreground: 210 40% 98%;
 
     --card: 222.2 84% 4.9%;
@@ -72,5 +72,16 @@
   }
   body {
     @apply bg-background text-foreground overflow-x-hidden scroll-smooth;
+  }
+
+  text {
+    text-shadow: -1px -1px 3px white, -1px 1px 3px white, 1px -1px 3px white,
+      1px 1px 3px white;
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
 }

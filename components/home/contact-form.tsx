@@ -36,7 +36,7 @@ export const Contactform = () => {
 
   const onSubmit = (values: z.infer<typeof SendMessageSchema>) => {};
   return (
-    <div className="max-w-3xl mx-auto bg-white dark:bg-[#07102d] p-8 md:p-14 rounded-2xl overflow-hidden a30">
+    <div className="max-w-3xl mx-auto bg-slate-50 dark:bg-[#030c21] p-8 md:p-14 rounded-2xl overflow-hidden a30">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div className="gap-4 grid grid-cols-1 md:grid-cols-2 pb-4">
@@ -47,7 +47,12 @@ export const Contactform = () => {
                 <FormItem>
                   <FormLabel>First Name</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPending} placeholder="John" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      className="bg-white dark:bg-inherit"
+                      placeholder="John"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -60,7 +65,12 @@ export const Contactform = () => {
                 <FormItem>
                   <FormLabel>Last Name</FormLabel>
                   <FormControl>
-                    <Input {...field} disabled={isPending} placeholder="Doe" />
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="Doe"
+                      className="bg-white dark:bg-inherit"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -77,6 +87,7 @@ export const Contactform = () => {
                       {...field}
                       disabled={isPending}
                       placeholder="john.doe@example.com"
+                      className="bg-white dark:bg-inherit"
                       type="email"
                     />
                   </FormControl>
@@ -95,6 +106,7 @@ export const Contactform = () => {
                       {...field}
                       placeholder="+2380...."
                       type="tel"
+                      className="bg-white dark:bg-inherit"
                       disabled={isPending}
                     />
                   </FormControl>
@@ -109,7 +121,12 @@ export const Contactform = () => {
                 <FormItem className="col-span-1 md:col-span-2">
                   <FormLabel>What are you looking for?</FormLabel>
                   <FormControl>
-                    <Textarea placeholder="Enter Message" rows={3} {...field} />
+                    <Textarea
+                      placeholder="Enter Message"
+                      rows={3}
+                      {...field}
+                      className="bg-white dark:bg-inherit"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

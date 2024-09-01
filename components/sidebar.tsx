@@ -5,6 +5,7 @@ import { Box, Home2, Profile2User, Setting2, SmsStar } from "iconsax-react";
 import { LogOut, Zap } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Tooltip } from "./tooltip";
+import Link from "next/link";
 
 export const sidebarIconsTop = [
   {
@@ -13,22 +14,17 @@ export const sidebarIconsTop = [
     link: "/dashboard",
   },
   {
-    name: "Analytics",
-    Icon: SmsStar,
-    link: "/analytics",
-  },
-  {
-    name: "User",
+    name: "Referrals",
     Icon: Profile2User,
-    link: "/user",
+    link: "/referrals",
   },
   {
-    name: "Messages",
-    Icon: Box,
-    link: "/messages",
+    name: "Withdrawal",
+    Icon: SmsStar,
+    link: "/withdraw",
   },
   {
-    name: "Setting",
+    name: "Settings",
     Icon: Setting2,
     link: "/settings",
   },
@@ -38,20 +34,18 @@ export const Sidebar = () => {
 
   return (
     <div className="flex flex-col items-center py-4 space-y-4 h-full">
-      <div className="w-fit p-2 lg:mx-auto mx-2 rounded-full cursor-pointer">
-        <Zap className="size-6" />
-      </div>
       <div className="flex flex-col w-full flex-1 justify-center space-y-4">
         {sidebarIconsTop.map(({ name, Icon, link }) => (
           <Tooltip name={name} key={name}>
-            <div
+            <Link
+              href={link}
               role="button"
-              className="w-full relative group flex p-1 space-x-2"
+              className="my-2 relative group flex p-1 gap-x-2"
             >
               <Icon
                 className={cn(
-                  "w-5 h-5 md:h-6 md:w-6 lg:mx-auto mx-2 text-gray-500 group-hover:text-black dark:group-hover:text-white",
-                  path === link && "text-black dark:text-white"
+                  "size-5 md:size-6 lg:mx-auto mx-2 text-gray-500 transition duration-200 ease-in group-hover:size-6 group-hover:md:size-7 group-hover:text-black dark:group-hover:text-white",
+                  path === link && "text-black size-6 md:size-7 dark:text-white"
                 )}
               />
               <p
@@ -68,7 +62,7 @@ export const Sidebar = () => {
                   path === link && "bg-black dark:bg-white h-full"
                 )}
               />
-            </div>
+            </Link>
           </Tooltip>
         ))}
       </div>

@@ -42,3 +42,25 @@ export const NewPasswordSchema = z.object({
     message: "Minimum of 6 characters required",
   }),
 });
+
+export const InvitePeopleSchema = z.object({
+  email: z.string().email(),
+});
+
+export const BankDetailSchema = z.object({
+  bankName: z
+    .object({
+      name: z.string(),
+      code: z.number(),
+    })
+    .nullable(),
+  bankNumber: z.number().refine((val) => val.toString().length === 10, {
+    message: "Bank number must be 10 digits",
+  }),
+});
+
+export const OtpSchema = z.object({
+  pin: z.string().min(6, {
+    message: "Your one-time password must be 6 characters.",
+  }),
+});

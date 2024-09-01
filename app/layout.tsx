@@ -1,14 +1,13 @@
 import { auth } from "@/auth";
+import { Toaster } from "sonner";
+import { SessionProviders } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
-import { SessionProviders } from "@/components/providers/session-provider";
-import Head from "next/head";
+import { ModalProvider } from "@/components/providers/modal-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,28 +23,23 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <html lang="en" suppressHydrationWarning>
-      {/* <Head>
-        <link
-          rel="preload"
-          href="/_next/static/css/app/layout.css?v=1718263545621"
-          as="style"
-        />
-      </Head> */}
-      <body className={cn(inter.className, "scroll-smooth")}>
-        <SessionProviders session={session}>
+    <SessionProviders session={session}>
+      <html lang="en" suppressHydrationWarning>
+        <body className={cn(inter.className, "scroll-smooth")}>
           <ThemeProvider
             attribute="class"
-            defaultTheme="dark"
+            defaultTheme="light"
             enableSystem
             storageKey="opes-app"
           >
-            <SocketProvider>
-              <QueryProvider>{children}</QueryProvider>
-            </SocketProvider>
+            <QueryProvider>
+              <Toaster className="z-50" position="top-center" duration={1000} />
+              <ModalProvider />
+              {children}
+            </QueryProvider>
           </ThemeProvider>
-        </SessionProviders>
-      </body>
-    </html>
+        </body>
+      </html>
+    </SessionProviders>
   );
 }

@@ -79,15 +79,20 @@ model User {
   twoFactorConfirmation TwoFactorComfirmation?
   role                  UserRole               @default(USER)
 
+  invitationCode String?
   payment        Payment?
   paymentPlan    PaymentPlan?
-  invitationCode String?      @unique
 
   referrals    Referral[] @relation("ReferrerReferrals")
   referredBy   Referral?  @relation("ReferredUser")
   referredById String?    @db.ObjectId
 
-  earnings Float @default(0.0)
+  earnings             Float           @default(0.0)
+  withdrawableEarnings Float           @default(0.0)
+  referralCountGen     ReferralCount[]
+  referralCount        Int             @default(0)
+
+  bankDetails BankDetails?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -114,11 +119,54 @@ model Referral {
   referrerId String @db.ObjectId
   referrer   User   @relation("ReferrerReferrals", fields: [referrerId], references: [id], onDelete: Cascade)
 
-  referredId String   @unique @db.ObjectId
-  referred   User     @relation("ReferredUser", fields: [referredId], references: [id], onDelete: Cascade)
-  generation Int
-  createdAt  DateTime @default(now())
+  referredId String @unique @db.ObjectId
+  referred   User   @relation("ReferredUser", fields: [referredId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
 
   @@unique([referrerId, referredId])
   @@index([referrerId])
+}
+
+model EarningHistory {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  payerId    String
+  receiverId String
+  amount     Float
+
+  createdAt DateTime @default(now())
+}
+
+model ReferralCount {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  generation Int
+  count      Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, generation])
+}
+
+model BankDetails {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @db.ObjectId
+
+  accountName   String
+  accountNumber String
+  bankName      String
+  bankCode      String
+  recipientCode String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId])
 }

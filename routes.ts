@@ -4,10 +4,9 @@
  * @type {string[]}
  */
 export const publicRoute = [
-  "/auth/new-verification",
-  "/api/webhook",
-  "/api/socket/webhook",
   "/api/signup",
+  "/api/webhook",
+  "/api/pusherAuth",
   // "/block",
 ];
 
@@ -22,6 +21,19 @@ export const authRoutes = [
   "/auth/error",
   "/auth/reset",
   "/auth/new-password",
+  "/auth/new-verification",
+];
+
+/**
+ * An array of routes that are use for authentication
+ * These routes will redirect subscribed user to /home
+ * @type {string[]}
+ */
+export const userRoute = [
+  "/dashboard",
+  "/notification",
+  "/settings",
+  "/referrals",
 ];
 
 /**

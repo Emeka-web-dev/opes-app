@@ -8,11 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
+
 import { logout } from "@/actions/logout";
 import { ChevronDown } from "lucide-react";
 import { Avatar, AvatarFallback } from "./ui/avatar";

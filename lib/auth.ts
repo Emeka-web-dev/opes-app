@@ -11,7 +11,7 @@ export const purchase = async () => {
   const session = await auth();
   const purchase = await db.payment.findUnique({
     where: {
-      userId: session?.user.id,
+      userId: session?.user?.id,
     },
   });
   return purchase;
