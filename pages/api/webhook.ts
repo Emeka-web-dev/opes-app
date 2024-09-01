@@ -27,61 +27,6 @@ export default async function handler(
       return res.status(400).json("Not authorized");
     }
 
-    // const userId = body.data.metadata.userId;
-    // const paymentPlan: PaymentPlan = body.data.metadata.tier;
-
-    // const user = await getUserById(userId);
-    // if (!user) {
-    //   return res.status(400).json("User not found!");
-    // }
-
-    // if payment is successful
-    // if (body.event === "charge.success") {
-    //   if (!userId || !paymentPlan) {
-    //     return res.status(400).json("Webhook Error: Missing metadata");
-    //   }
-    //   const amount = body?.data?.amount / 100;
-
-    //   //create payment
-    //   await db.payment.create({
-    //     data: {
-    //       userId,
-    //       method: body?.data?.channel,
-    //       amount,
-    //       reference: body?.data?.reference,
-    //     },
-    //   });
-
-    //   //update user profile
-    //   await db.user.update({
-    //     where: {
-    //       id: userId,
-    //     },
-    //     data: {
-    //       paymentPlan,
-    //       invitationCode: await generateRefToken(6),
-    //     },
-    //   });
-
-    //   //if user is referred
-    //   if (user?.referredById) {
-    //     await calculateReferralRewards(user, amount, paymentPlan);
-    //   }
-
-    //   console.log("Earnings distributed");
-    // } else {
-    //   const logging: Logging = {
-    //     event: body.event,
-    //     reference: body?.data?.reference,
-    //     message: body?.data?.message,
-    //     createdAt: new Date(),
-    //   };
-    //   await createLogging(logging);
-    //   return res
-    //     .status(200)
-    //     .json(`Webhook Error: Unhandled event type ${body.event}`);
-    // }
-
     switch (body.event) {
       case "charge.success":
         const userId = body.data.metadata.userId;
