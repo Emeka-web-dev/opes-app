@@ -1,6 +1,7 @@
 "use client";
 import { UserWithReferral } from "@/app/api/getUserReferrals/route";
 import { DataTable } from "@/components/referral/data-table";
+import { ReferralSkeleton } from "@/components/referral/referral-skeleton";
 import { TreeChart } from "@/components/referral/tree-chart";
 import { collectAndSortByIndex } from "@/hooks/collect-and-sort-by-index";
 import { fillEmptySpots } from "@/hooks/fill-empty-spot";
@@ -37,7 +38,7 @@ const ReferralPage = () => {
   }
 
   if (status === "pending") {
-    return <div>Pending...</div>;
+    return <ReferralSkeleton />;
   }
   if (status === "error") {
     return <div>Pending</div>;

@@ -15,15 +15,16 @@ export const Navbar = () => {
       {/* left navbar */}
       <div className="flex">
         <Link href="/dashboard" className="font-semibold text-xl">
-          Dashboard
+          Opes
         </Link>
       </div>
 
       {/* right navbar */}
       <div className="col-span-4 flex justify-around items-center space-x-3 sm:space-x-4 pr-2">
-        <Button variant={"outline"} className="rounded-full p-2">
+        {/* TODO: fill in the spot */}
+        {/* <Button variant={"outline"} className="rounded-full p-2">
           <Bell className="w-5 h-5" />
-        </Button>
+        </Button> */}
         {/* <ModeToggle /> */}
         <NavbarDropDownMenu user={user?.user} />
       </div>

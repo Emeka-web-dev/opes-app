@@ -27,6 +27,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { WithdrawalSkeleton } from "@/components/withdrawal/withdrawal-skeleton";
 import { useUserQuery } from "@/hooks/use-user-query";
 import { useModal } from "@/hooks/useModalStore";
 import { useSessionStore } from "@/hooks/useSessionStore";
@@ -128,7 +129,7 @@ const BankPage = () => {
   };
 
   if (status === "pending") {
-    return <div>pending</div>;
+    return <WithdrawalSkeleton />;
   }
   if (status === "error") {
     return <div>Error</div>;

@@ -1,6 +1,8 @@
 "use client";
 
 import { Withdraw } from "@/components/withdrawal";
+import { EmptyWithdrawal } from "@/components/withdrawal/empty-withdrawal";
+import { WithdrawalSkeleton } from "@/components/withdrawal/withdrawal-skeleton";
 import { useUserQuery } from "@/hooks/use-user-query";
 import { useUserSocket } from "@/hooks/use-user-socket";
 import { useSessionStore } from "@/hooks/useSessionStore";
@@ -14,10 +16,10 @@ const WithdrawPage = () => {
     queryKey,
   });
 
-  useUserSocket({ queryKey, eventId: `user:${session?.user?.id}` });
+  // useUserSocket({ queryKey, eventId: `user:${session?.user?.id}` });
 
   if (status === "pending") {
-    return <div>Pending...</div>;
+    return <WithdrawalSkeleton />;
   }
   if (status === "error") {
     return <div>Pending</div>;
@@ -26,7 +28,7 @@ const WithdrawPage = () => {
   return data?.user?.bankDetails ? (
     <Withdraw data={data?.user as WithdrawalData} />
   ) : (
-    <div>No bank details</div>
+    <EmptyWithdrawal />
   );
 };
 

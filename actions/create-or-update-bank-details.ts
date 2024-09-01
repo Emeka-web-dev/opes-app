@@ -74,7 +74,7 @@ export const createOrUpdateBankDetails = async (
         }
       );
 
-      if (response.data.status !== true) {
+      if (!response.data.status) {
         throw new Error(response.data.message);
       }
       recipientCode = response.data.data.recipient_code;
@@ -106,7 +106,7 @@ export const createOrUpdateBankDetails = async (
         }
       );
 
-      if (response.data.status !== true) {
+      if (!response.data.status) {
         throw new Error(response.data.message);
       }
 

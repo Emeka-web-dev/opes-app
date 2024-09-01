@@ -1,5 +1,6 @@
 "use client";
 import { Balance } from "@/components/dashboard/balance";
+import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
 import { InvitePeople } from "@/components/dashboard/invite-people";
 import { Linechart } from "@/components/dashboard/line-chart";
 import {
@@ -31,7 +32,7 @@ const DashboardPage = () => {
   };
 
   if (status === "pending") {
-    return <div>Pending...</div>;
+    return <DashboardSkeleton />;
   }
   if (status === "error") {
     return <div>Pending</div>;

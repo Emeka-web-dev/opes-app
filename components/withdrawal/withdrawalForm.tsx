@@ -1,7 +1,15 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
+import { userWithdraw } from "@/actions/user-withdraw";
+import { useSessionStore } from "@/hooks/useSessionStore";
 
 type WithdrawalFormType = {
   amount: number;
@@ -9,6 +17,8 @@ type WithdrawalFormType = {
 export const WithdrawalForm = ({
   amount: withdrawableAmount,
 }: WithdrawalFormType) => {
+  const session = useSessionStore((state) => state.session);
+  const [isPending, startTransition] = useTransition();
   const [password, setPassword] = useState("");
   const [amount, setAmount] = useState("");
   const [amountError, setAmountError] = useState("");
@@ -18,6 +28,14 @@ export const WithdrawalForm = ({
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (amountError) return;
+
+    startTransition(() => {
+      userWithdraw(password, amount, session?.user?.id as string).then(
+        (data) => {
+          console.log(data);
+        }
+      );
+    });
   };
 
   useEffect(() => {
@@ -33,9 +51,7 @@ export const WithdrawalForm = ({
   return (
     <form className="p-4 flex flex-col gap-y-4" onSubmit={onSubmit}>
       <div>
-        <label className="block text-sm font-medium text-gray-700">
-          Amount (₦)
-        </label>
+        <label className="block text-sm font-medium">Amount (₦)</label>
         <Input
           type="number"
           className="mt-1 block w-full p-6 border border-gray-300 rounded-full shadow-sm focus:ring-[#4b2e9b] focus:border-[#4b2e9b] sm:text-sm custom-number-input"
@@ -48,9 +64,7 @@ export const WithdrawalForm = ({
       </div>
 
       <div className="">
-        <label className="block text-sm font-medium text-gray-700">
-          Password
-        </label>
+        <label className="block text-sm font-medium">Password</label>
         <div className="mt-1 relative">
           <Input
             type={passwordToggle}
@@ -76,7 +90,9 @@ export const WithdrawalForm = ({
           </span>
         </div>
       </div>
-      <Button type="submit">Withdraw</Button>
+      <Button type="submit" className="rounded-full">
+        Withdraw
+      </Button>
     </form>
   );
 };

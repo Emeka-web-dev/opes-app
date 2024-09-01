@@ -19,9 +19,9 @@ export const sidebarIconsTop = [
     link: "/referrals",
   },
   {
-    name: "Notifications",
+    name: "Withdrawal",
     Icon: SmsStar,
-    link: "/notification",
+    link: "/withdraw",
   },
   {
     name: "Settings",

@@ -35,15 +35,15 @@ const links: LinksProps[] = [
     icon: ListChecks,
     link: "/payment-history",
   },
+  // {
+  //   name: "Edit Profile",
+  //   icon: UserCog,
+  //   link: "/settings/profile",
+  // },
   {
-    name: "Edit Profile",
-    icon: UserCog,
-    link: "/settings/profile",
-  },
-  {
-    name: "Update Profile",
+    name: "Update Password",
     icon: Lock,
-    link: "/settings/password",
+    link: "/settings/update-password",
   },
   {
     name: "Update Bank Details",
@@ -88,7 +88,7 @@ const SettingsPage = () => {
             {user?.email}
           </h5>
           <h4 className="font-medium">{user?.name}</h4>
-          <span className="font-semibold text-sm text-[#9772fc] flex space-x-2 items-center">
+          <span className="font-semibold text-sm text-[#4b2e9b] flex space-x-2 items-center">
             <h5>{user?.invitationCode}</h5>
             <div className="cursor-pointer" onClick={onCopy}>
               {copied ? (
@@ -104,7 +104,7 @@ const SettingsPage = () => {
       {links.map(({ icon: Icon, name, link }) => (
         <Link
           href={link}
-          className="border-b px-2 py-4 text-muted-foreground hover:bg-[#fafafa] hover:text-[#9772fc] flex items-center justify-between"
+          className="border-b px-2 py-4 text-muted-foreground hover:bg-[#fafafa] hover:text-[#4b2e9b] flex items-center justify-between"
           key={link}
         >
           <span className="flex space-x-2 items-center">
