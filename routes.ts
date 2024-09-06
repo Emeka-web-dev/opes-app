@@ -29,12 +29,12 @@ export const authRoutes = [
  * These routes will redirect subscribed user to /home
  * @type {string[]}
  */
-export const userRoute = [
-  "/dashboard",
-  "/notification",
-  "/settings",
-  "/referrals",
-];
+// export const userRoute = [
+//   "/dashboard",
+//   "/notification",
+//   "/settings",
+//   "/referrals",
+// ];
 
 /**
  * The prefix for API authentication routes

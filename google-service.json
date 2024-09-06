@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "still-freedom-434612-t9",
+  "private_key_id": "00aac06c1a594d2d37535d046536fbdc0079e807",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCiPUbLBlISRK1X\nvZ7Y2gEJCpboEvdO/1ywqWh8m6DbcRv1vAVEtbd1bB5gzM4IZDCSGNXcxlXDti25\nEiZfkTHyNZInXCy6mreRdkyjT0q8a6xC4MgDkNRuMKJpzDEyLE1H9YmTUNXlL2xW\nYLe3VuDktNXxFTN7cx4ilEAqscso6knUKQ8KwcSB/78hh91KkiwPfkFRmAdZ6/8u\n1qChAAgwTkB8YVjbRb1Tqvhnd0EH/DdLtZYiWDlOZgj0o1oc0cFylnrTpA8+RwlB\nOpxDoHaW5Q4eU761vbfjmQ3OROk51IB1xGj7Pi6PLp9vkxH9rMoOdmlyFbQrn2BE\n2RMWxMItAgMBAAECggEAAeFS6jRrDBImrh8g8aNpIqkwQYVCv3QfJ173OoZ1MUXY\nzJq+tuKiOyajHX0SIC/FDlRiWhokUU3RrtTig/YDTarIRFOBozH60aE81yGqnI9k\n4iuHtd7eT16Z6z72DP5NcPmL/BySNgM8Lq4VQvcrSQs9dXtI6vPVFBKCwdvonlNA\nB0SziXlzTWkrvppsxO0xd8zdeY54S4Lv4fEsyZsN031vpB5BGoeSY+FCHyUv7vt1\n/GI8HN28+5FLfwm9GLMZ+IopINRNzGTqp+fZDec09xPtmGNA41nbUkAh5r57kWj2\nPr8eVjzzVM5NMG/yOSUF/rbvX4oxGkEIK627F8NLMQKBgQDYqfrUvqVfnVIWBpub\n4k543cKcI+Q1ZC8rUfXETTZxtbU85FhNNOUZN14d9K894Jhg13YtR6Sx3iLZ++c7\n4hcCnWPYZhUTkUvelEtqIcAUd7ItamrGzstw1GC0tkPtrm7rJKGZt2pFgwLXwl4p\nJfgtgJ/VjUowEJRAaZn6sBymZQKBgQC/scV3akhJo0wHON1MlJna+FHiC4JSYzSF\nXh96JanCHSSDqOx9JQ3rP04IUlGtJTwTLY71NRWqY920rHqurpzbmqxCB/Tm4SdO\nIIvGhjvFoNX1U2RoyIczpGLvd0NykHFUBlqQyba7HtVTI/neiBNHiKMlWGLPSgS+\n4S2lIJXsKQKBgCvPk0zZkA8ZfLO/ek+3Hy8JiISSLV8udutHk26yPkQX/iHl+oUC\nISFMNNfR1m2osKdEaj0Vs5PT2zBA460UNprswHfNjI18X98OFYHMeU6qNXlBf33b\n6v9RsoxYHrw8/WjG63ZtxCtyJm0CfI/NgbWRwMAp5cp6T8AGmoA6hFCRAoGBAKcn\nYdQmRlCH51To3ffYIG0TWXtto78pqHOfRn1heCy+8scntsfNVtzKf8W72mLL9B2Y\n/W6OUo0YtgvE1tmZg0fvEMQnYgMtU/PJZ3i+NkK3Y7qfdA/2xAZhErBTY+nzUA7/\n11snuYJjeYsc9NZ5+63F1NVMxCSTG55ChmXWC0U5AoGBAKEFTnT3MAGfZayjj+iu\ndB+UaOTBWojp6jlu3rAyAlcPFXX0+e2G77kZjERQTBVq1VvKhS7fSmzNS/eJonUQ\nKNWhZe2nLiZgvqHoLjB6rh5pK0Zdr7+madSZL81Ue/LrCtKzdUr46yZVMZITkXQI\n0xVkUPehzX7MkrfxdHd2ZmPj\n-----END PRIVATE KEY-----\n",
+  "client_email": "opes-tech@still-freedom-434612-t9.iam.gserviceaccount.com",
+  "client_id": "104697810793056443227",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/opes-tech%40still-freedom-434612-t9.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

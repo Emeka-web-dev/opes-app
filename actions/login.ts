@@ -86,10 +86,16 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
   }
 
   try {
+    const isAdminOrModerator = existingUser.role == ("ADMIN" || "MODERATOR");
+    const redirectTo = isAdminOrModerator
+      ? "/admin/dashboard"
+      : !!existingUser.payment
+      ? "/dashboard"
+      : "/";
     await signIn("credentials", {
       email,
       password,
-      redirectTo: !!existingUser.payment ? "/dashboard" : "/",
+      redirectTo,
     });
     revalidatePath("/checkout");
     return { success: "Logged in successful!" };

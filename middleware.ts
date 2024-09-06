@@ -7,7 +7,6 @@ import {
   apiAuthPrefix,
   authRoutes,
   publicRoute,
-  userRoute,
 } from "./routes";
 import { currentUser } from "./lib/auth";
 import { signOut } from "./auth";
@@ -17,12 +16,16 @@ const { auth: middleware } = NextAuth(authConfig);
 
 export default middleware(async (req) => {
   const user = await currentUser();
+  // console.log("USER", user);
   const isSubscribed = user?.isSubscribed;
-  const isPaymentPlan = user?.paymentPlan!!;
+  const role = user?.role;
+  const isAdminOrModerator = role === ("ADMIN" || "MODERATOR");
+  // console.log({ isAdminOrModerator });
+  // const isPaymentPlan = user?.paymentPlan!!;
 
   const { nextUrl } = req;
   const isLoggedIn = req.auth!!;
-  const isUserRoute = userRoute.includes(nextUrl.pathname);
+  // const isUserRoute = userRoute.includes(nextUrl.pathname);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
   const isPublicRoute = publicRoute.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
@@ -33,14 +36,24 @@ export default middleware(async (req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
+      // If user is admin or moderator
+      if (isAdminOrModerator) {
+        return Response.redirect(new URL("/admin/dashboard", nextUrl));
+      }
+
       return Response.redirect(
         new URL(isSubscribed ? "/dashboard" : "/checkout", nextUrl)
       );
     }
     return;
   }
+
   if (nextUrl.pathname == "/" && isSubscribed) {
     return Response.redirect(new URL("/dashboard", nextUrl));
+  }
+
+  if (nextUrl.pathname == "/" && isAdminOrModerator) {
+    return Response.redirect(new URL("/admin/dashboard", nextUrl));
   }
 
   const authRoute = `/auth/signup${nextUrl?.search}`;

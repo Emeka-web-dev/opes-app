@@ -1,13 +1,14 @@
 import { auth } from "@/auth";
-import { Toaster } from "sonner";
+import { ModalProvider } from "@/components/providers/modal-provider";
+import { QueryProvider } from "@/components/providers/query-provider";
 import { SessionProviders } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
+import { Toaster } from "sonner";
 import "./globals.css";
-import { QueryProvider } from "@/components/providers/query-provider";
-import { ModalProvider } from "@/components/providers/modal-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,8 +24,21 @@ export default async function RootLayout({
 }>) {
   const session = await auth();
   return (
-    <SessionProviders session={session}>
-      <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <SessionProviders session={session}>
+        <Script
+          strategy="lazyOnload"
+          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}`}
+        ></Script>
+        <Script id="ga-script" strategy="lazyOnload">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', '${process.env.GOOGLE_ANALYTICS}', {
+          page_path: window.location.pathname});
+          `}
+        </Script>
         <body className={cn(inter.className, "scroll-smooth")}>
           <ThemeProvider
             attribute="class"
@@ -39,7 +53,7 @@ export default async function RootLayout({
             </QueryProvider>
           </ThemeProvider>
         </body>
-      </html>
-    </SessionProviders>
+      </SessionProviders>
+    </html>
   );
 }
