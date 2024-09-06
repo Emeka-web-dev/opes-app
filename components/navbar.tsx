@@ -14,7 +14,10 @@ export const Navbar = () => {
     <div className="flex justify-between items-center px-2 w-full">
       {/* left navbar */}
       <div className="flex">
-        <Link href="/dashboard" className="font-semibold text-xl">
+        <Link
+          href={user?.user?.role === "USER" ? "/dashboard" : "/admin/dashboard"}
+          className="font-semibold text-xl"
+        >
           Opes
         </Link>
       </div>
