@@ -13,7 +13,7 @@ export const MobileToggle = () => {
           <Menu />
         </Button>
       </SheetTrigger>
-      <SheetContent className="flex flex-col pt-10" side="right">
+      <SheetContent className="flex flex-col pt-10 px-5" side="right">
         <NavigationRef />
       </SheetContent>
     </Sheet>

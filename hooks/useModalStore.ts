@@ -2,7 +2,10 @@ import { create } from "zustand";
 import * as z from "zod";
 import { BankDetailSchema } from "@/schemas";
 
-export type ModalType = "updateAccountNumber" | "openAdminNavigation";
+export type ModalType =
+  | "updateAccountNumber"
+  | "openAdminNavigation"
+  | "openMobileToggle";
 
 type CreateOrUpdate = {
   value: z.infer<typeof BankDetailSchema>;

@@ -7,6 +7,9 @@ export const publicRoute = [
   "/api/signup",
   "/api/webhook",
   "/api/pusherAuth",
+  "/terms-of-use",
+  "/privacy-policy",
+  "/about",
   // "/block",
 ];
 
