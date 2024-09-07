@@ -48,6 +48,15 @@ export default middleware(async (req) => {
     return;
   }
 
+  if (
+    user &&
+    (user?.customExpiration as number) < Math.floor(Date.now() / 1000)
+  ) {
+    if (nextUrl.pathname !== "/logout") {
+      return Response.redirect(new URL("/logout", nextUrl));
+    }
+  }
+
   if (nextUrl.pathname == "/" && isSubscribed) {
     return Response.redirect(new URL("/dashboard", nextUrl));
   }

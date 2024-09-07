@@ -1,11 +1,8 @@
 "use client";
-import { Bell } from "lucide-react";
 import Link from "next/link";
 
-import { ModeToggle } from "./home/modal-toggle";
-import { NavbarDropDownMenu } from "./navbar-dropDownMenu";
-import { Button } from "./ui/button";
 import { useSessionStore } from "@/hooks/useSessionStore";
+import { NavbarDropDownMenu } from "./navbar-dropDownMenu";
 
 export const Navbar = () => {
   const user = useSessionStore((state) => state.session);

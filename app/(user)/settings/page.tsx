@@ -40,11 +40,11 @@ const links: LinksProps[] = [
   //   icon: UserCog,
   //   link: "/settings/profile",
   // },
-  {
-    name: "Update Password",
-    icon: Lock,
-    link: "/settings/update-password",
-  },
+  // {
+  //   name: "Update Password",
+  //   icon: Lock,
+  //   link: "/settings/update-password",
+  // },
   {
     name: "Update Bank Details",
     icon: BadgeCheck,
