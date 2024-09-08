@@ -7,9 +7,9 @@ import { redirect } from "next/navigation";
 
 export const LayoutProvider = ({ children }: { children: ReactNode }) => {
   const user = useSessionStore((state) => state.session);
-  if (user?.user?.paymentPlan) {
-    return redirect("/checkout");
-  }
+  //   if (user?.user?.paymentPlan) {
+  //     return redirect("/checkout");
+  //   }
 
   return (
     <main className="scroll-smooth overflow-x-hidden">

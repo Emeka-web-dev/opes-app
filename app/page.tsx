@@ -24,9 +24,9 @@ export default function Home() {
         <Faq />
       </section>
 
-      <section id="contact">
+      {/* <section id="contact">
         <Contact />
-      </section>
+      </section> */}
     </LayoutProvider>
   );
 }

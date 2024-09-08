@@ -7,7 +7,7 @@ export const Contact = () => {
   return (
     <ContainerLayout
       header="Need Any Help?"
-      caption="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+      caption="For enquiries and further assistance kindly fill in the form below or contact support."
     >
       <div className="relative">
         <Contactform />

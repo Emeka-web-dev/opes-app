@@ -21,7 +21,7 @@ export const PricingContainer = ({
       <div className="absolute w-[250px] h-[250px] rounded-full -top-40 -right-14 bg-[#e62e2d]/5  dark:bg-[#cec3d8]/20 -z-10" />
       <div className="flex flex-col ">
         <h4 className="text-2xl p-0 m-0">{name}</h4>
-        <h3 className="text-3xl font-semibold">N{amount}</h3>
+        <h3 className="text-3xl font-semibold">₦{amount}</h3>
       </div>
       <div className="mt-12">
         {points.map((point, i) => (

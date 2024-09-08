@@ -23,14 +23,14 @@ export const NavigationItems = ({ user }: any) => {
         scrollTop && "shadow-md"
       )}
     >
-      <div className="px-4 flex items-center justify-between w-full max-w-7xl mx-auto">
+      <div className="px-4 flex items-center justify-between w-full max-w-7xl mx-2">
         <Link href="/">OPES</Link>
         <div className="flex items-center space-x-28">
-          {/* {pathName === "/" && (
-            )} */}
-          <div className=" space-x-14 hidden md:flex">
-            <NavigationRef />
-          </div>
+          {!pathName?.startsWith("/auth") && (
+            <div className=" space-x-14 hidden md:flex">
+              <NavigationRef />
+            </div>
+          )}
           <div className="flex items-center space-x-4">
             {user ? (
               <NavbarDropDownMenu user={user} />
@@ -49,15 +49,16 @@ export const NavigationItems = ({ user }: any) => {
             )}
 
             {/* <ModeToggle /> */}
-            {/* {pathName === "/" && <MobileToggle />} */}
-            <Button
-              variant="ghost"
-              size="icon"
-              className="md:hidden"
-              onClick={() => onOpen("openMobileToggle")}
-            >
-              <Menu className="size-5" />
-            </Button>
+            {!pathName?.startsWith("/auth") && (
+              <Button
+                variant="ghost"
+                size="icon"
+                className="md:hidden"
+                onClick={() => onOpen("openMobileToggle")}
+              >
+                <Menu className="size-5" />
+              </Button>
+            )}
           </div>
         </div>
       </div>

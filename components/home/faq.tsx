@@ -6,39 +6,33 @@ const questionAndAnswers = [
   {
     question: "Which plan is suitable for me?",
     answer:
-      "Sed tempor mi at nunc commodo, quis tincidunt turpis finibus. Pellentesque congue neque justo.",
+      "All plans are beneficial and earnings differ depending on your preferred plan.",
   },
   {
-    question: "Which plan is suitable for me?",
-    answer:
-      "Sed tempor mi at nunc commodo, quis tincidunt turpis finibus. Pellentesque congue neque justo.",
+    question: "Do I need refferals to earn?",
+    answer: "yes! You need refferals to earn on Opes",
   },
   {
-    question: "Which plan is suitable for me?",
+    question: "How do I withdraw my earnings?",
     answer:
-      "Sed tempor mi at nunc commodo, quis tincidunt turpis finibus. Pellentesque congue neque justo.",
+      "The total earnings shown on available balance will be sent to the bank account provided.",
   },
   {
-    question: "Which plan is suitable for me?",
+    question: "How do I earn money on Opes?",
     answer:
-      "Sed tempor mi at nunc commodo, quis tincidunt turpis finibus. Pellentesque congue neque justo.",
+      "You earn income in 3 ways; refferal bonus, matching bonus, and spill overs.",
   },
   {
-    question: "Which plan is suitable for me?",
+    question: "How do I get refferals?",
     answer:
-      "Sed tempor mi at nunc commodo, quis tincidunt turpis finibus. Pellentesque congue neque justo.",
-  },
-  {
-    question: "Which plan is suitable for me?",
-    answer:
-      "Sed tempor mi at nunc commodo, quis tincidunt turpis finibus. Pellentesque congue neque justo.",
+      "Using your unique refferal link invite friends and family to join Opes.",
   },
 ];
 export const Faq = () => {
   return (
     <ContainerLayout
       header="Frequently Asked Questions"
-      caption="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+      caption="These are the frequently asked question that might answer some of your questions"
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 max-w-5xl gap-x-12 mx-auto">
         {questionAndAnswers.map((qAndA, i) => (

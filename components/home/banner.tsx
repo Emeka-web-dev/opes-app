@@ -8,12 +8,12 @@ export const Banner = () => {
       <div className="max-w-6xl mx-auto py-10 px-4 grid grid-cols-1 lg:grid-cols-2 space-y-20 lg:space-y-0">
         <div className="space-y-7 px-5 flex flex-col lg:justify-center lg:items-start">
           <h2 className="text-4xl lg:text-5xl font-semibold">
-            Welcome to the{" "}
-            <span className="block font-extrabold">Referral App</span>
+            Welcome to <span className="block font-extrabold">Opes</span>
           </h2>
           <p className="text-gray-700 dark:text-white">
-            Lorem ipsum dolor sit amet, consec adipiscing elit In vulputate
-            vitae massa eu dapibus ligula.
+            The <span className="font-semibold">#1</span> earning platform, we
+            provide you with an opportunity to generate significant income using
+            our matrix system.
           </p>
         </div>
         <div className="flex justify-center items-center relative  lg:pb-0 ">

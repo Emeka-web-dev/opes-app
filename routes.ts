@@ -10,6 +10,7 @@ export const publicRoute = [
   "/terms-of-use",
   "/privacy-policy",
   "/about",
+  "/",
   // "/block",
 ];
 

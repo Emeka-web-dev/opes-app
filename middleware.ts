@@ -16,14 +16,12 @@ const { auth: middleware } = NextAuth(authConfig);
 
 export default middleware(async (req) => {
   const user = await currentUser();
-  // console.log("USER", user);
   const isSubscribed = user?.isSubscribed;
   const role = user?.role;
   const isAdminOrModerator = role === ("ADMIN" || "MODERATOR");
-  // console.log({ isAdminOrModerator });
-  // const isPaymentPlan = user?.paymentPlan!!;
 
   const { nextUrl } = req;
+
   const isLoggedIn = req.auth!!;
   // const isUserRoute = userRoute.includes(nextUrl.pathname);
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
@@ -32,7 +30,14 @@ export default middleware(async (req) => {
 
   if (isApiAuthRoute) return;
 
-  if (isPublicRoute) return;
+  const hasRefLink = nextUrl?.searchParams?.get("ref");
+  const refURL = `/auth/signup${nextUrl?.search}`;
+
+  if (!isLoggedIn && isPublicRoute) {
+    // if has refLInk redirect
+    if (hasRefLink) return Response.redirect(new URL(refURL, nextUrl));
+    return;
+  }
 
   if (isAuthRoute) {
     if (isLoggedIn) {
@@ -48,8 +53,9 @@ export default middleware(async (req) => {
     return;
   }
 
+  // Check if session expires
   if (
-    user &&
+    isLoggedIn &&
     (user?.customExpiration as number) < Math.floor(Date.now() / 1000)
   ) {
     if (nextUrl.pathname !== "/logout") {
@@ -57,23 +63,20 @@ export default middleware(async (req) => {
     }
   }
 
-  if (nextUrl.pathname == "/" && isSubscribed) {
-    return Response.redirect(new URL("/dashboard", nextUrl));
+  if (nextUrl.pathname === "/") {
+    if (isSubscribed) {
+      return Response.redirect(new URL("/dashboard", nextUrl));
+    }
+
+    if (user?.paymentPlan) {
+      return Response.redirect(new URL("/checkout", nextUrl));
+    }
+
+    if (isAdminOrModerator) {
+      return Response.redirect(new URL("/admin/dashboard", nextUrl));
+    }
   }
 
-  if (nextUrl.pathname == "/" && isAdminOrModerator) {
-    return Response.redirect(new URL("/admin/dashboard", nextUrl));
-  }
-
-  const authRoute = `/auth/signup${nextUrl?.search}`;
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(
-      new URL(
-        nextUrl?.searchParams?.get("ref") ? authRoute : "/auth/login",
-        nextUrl
-      )
-    );
-  }
   if (!isLoggedIn) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }

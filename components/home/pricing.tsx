@@ -9,26 +9,35 @@ export const Pricing = () => {
     <div className="max-w-7xl mx-auto relative overflow-hidden">
       <ContainerLayout
         header="Flexible Plans"
-        caption="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
+        caption="Choose your preferred plan to enjoy exclusive benefits of each plan."
       >
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 gap-x-4">
           <PricingContainer
             name="Basic Plan"
             amount="2,000"
             url={`/checkout?plan=${Tier.BASIC}`}
-            points={["Life time free updates!", "Unlimited transactions"]}
+            points={[
+              "Earn from 3 levels of refferal",
+              "+₦5,000 completion bonus",
+            ]}
           />
           <PricingContainer
-            name="Popular Plan"
+            name="Starter Plan"
             amount="5,000"
             url={`/checkout?plan=${Tier.POPULAR}`}
-            points={["Life time free updates!", "Unlimited transactions"]}
+            points={[
+              "Earn from 4 levels of refferal",
+              "+₦10,000 completion bonus",
+            ]}
           />
           <PricingContainer
-            name="Goldern Plan"
+            name="Advanced Plan"
             amount="10,000"
             url={`/checkout?plan=${Tier.GOLDEN}`}
-            points={["Life time free updates!", "Unlimited transactions"]}
+            points={[
+              "Earn from 5 levels of refferal ",
+              "+₦50,000 completion bonus",
+            ]}
           />
         </div>
       </ContainerLayout>
