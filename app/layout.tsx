@@ -5,12 +5,15 @@ import { SessionProviders } from "@/components/providers/session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Rubik } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Rubik({
+  weight: ["300", "400", "700"],
+  subsets: ["latin"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",

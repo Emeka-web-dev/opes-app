@@ -24,6 +24,7 @@ export default function Home() {
         <Faq />
       </section>
 
+      {/* <TawkToWidget /> */}
       {/* <section id="contact">
         <Contact />
       </section> */}
