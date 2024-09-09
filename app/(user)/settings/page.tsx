@@ -22,37 +22,45 @@ type LinksProps = {
   name: string;
   icon: LucideIcon;
   link: string;
+  target: "_blank" | "_self";
 };
 
 const links: LinksProps[] = [
   {
     name: "Withdraw",
     icon: Box,
+    target: "_self",
     link: "/withdraw",
   },
   {
     name: "Payment History",
     icon: ListChecks,
+    target: "_self",
     link: "/payment-history",
   },
-  // {
-  //   name: "Edit Profile",
-  //   icon: UserCog,
-  //   link: "/settings/profile",
-  // },
-  // {
-  //   name: "Update Password",
-  //   icon: Lock,
-  //   link: "/settings/update-password",
-  // },
+
   {
     name: "Update Bank Details",
     icon: BadgeCheck,
+    target: "_self",
     link: "/settings/bank",
+  },
+  {
+    name: "About",
+    icon: UserCog,
+    target: "_blank",
+    link: "/about",
+  },
+  {
+    name: "Privacy Policy",
+    icon: Lock,
+    target: "_blank",
+    link: "/privacy-policy",
   },
   {
     name: "Logout",
     icon: Power,
+    target: "_self",
     link: "/logout",
   },
 ];
@@ -101,9 +109,10 @@ const SettingsPage = () => {
         </div>
       </div>
       {/* link */}
-      {links.map(({ icon: Icon, name, link }) => (
+      {links.map(({ icon: Icon, name, link, target }) => (
         <Link
           href={link}
+          target={target}
           className="border-b px-2 py-4 text-muted-foreground hover:bg-[#fafafa] hover:text-[#4b2e9b] flex items-center justify-between"
           key={link}
         >

@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
 import { Button } from "../ui/button";
 import { NavigationRef } from "./navigation-ref";
+import Image from "next/image";
 
 export const NavigationItems = ({ user }: any) => {
   const { onOpen } = useModal();
@@ -23,8 +24,15 @@ export const NavigationItems = ({ user }: any) => {
         scrollTop && "shadow-md"
       )}
     >
-      <div className="px-4 flex items-center justify-between w-full max-w-7xl mx-2">
-        <Link href="/">OPES</Link>
+      <div className="px-4 flex items-center justify-between w-full max-w-7xl mx-auto">
+        <Link href="/" className="relative w-16 h-14 md:w-[4.5rem] md:h-16">
+          <Image
+            src="/images/logo-image.png"
+            fill
+            className="object-contain"
+            alt="logo-image"
+          />
+        </Link>
         <div className="flex items-center space-x-28">
           {!pathName?.startsWith("/auth") && (
             <div className=" space-x-14 hidden md:flex">

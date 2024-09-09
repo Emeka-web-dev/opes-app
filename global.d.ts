@@ -1,16 +1,17 @@
 // // global.d.ts
-// export {};
+export {};
 
-// declare global {
-//   interface Window {
-//     Tawk_API?: {
-//       hideWidget: () => void;
-//       endChat: () => void;
-//     };
-//   }
-// }
+declare global {
+  interface Window {
+    Tawk_API?: {
+      //   hideWidget: () => void;
+      //   endChat: () => void;
+      shutdown: () => void;
+    };
+  }
+}
 
 // global.d.ts
-interface Window {
-  Intercom: (command: string, options?: any) => void;
-}
+// interface Window {
+//   Intercom: (command: string, options?: any) => void;
+// }

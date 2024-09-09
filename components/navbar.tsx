@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { useSessionStore } from "@/hooks/useSessionStore";
 import { NavbarDropDownMenu } from "./navbar-dropDownMenu";
+import Image from "next/image";
 
 export const Navbar = () => {
   const user = useSessionStore((state) => state.session);
@@ -13,9 +14,14 @@ export const Navbar = () => {
       <div className="flex">
         <Link
           href={user?.user?.role === "USER" ? "/dashboard" : "/admin/dashboard"}
-          className="font-semibold text-xl"
+          className="font-semibold text-xl relative w-16 h-14"
         >
-          Opes
+          <Image
+            src="/images/logo-image.png"
+            fill
+            className="object-contain"
+            alt="logo-image"
+          />
         </Link>
       </div>
 

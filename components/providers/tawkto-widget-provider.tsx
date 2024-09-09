@@ -41,13 +41,14 @@ const TawkToWidget = () => {
     tawkScript.charset = "UTF-8";
     tawkScript.setAttribute("crossorigin", "*");
     document.body.appendChild(tawkScript);
+    // window.Tawk_API?.shutdown();
 
     return () => {
-      document.body.removeChild(tawkScript); // Cleanup the script when unmounting
+      document.body.removeChild(tawkScript);
     };
   }, []);
 
-  return null; // This component doesn't render anything
+  return null;
 };
 
 export default TawkToWidget;

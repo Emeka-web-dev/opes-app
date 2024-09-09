@@ -1,7 +1,11 @@
+"use client";
 import { LayoutProvider } from "@/components/providers/layout-provider";
-import React from "react";
+import React, { useEffect } from "react";
 
 const AboutPage = () => {
+  // useEffect(() => {
+  //   window.Tawk_API?.shutdown();
+  // }, []);
   return (
     <LayoutProvider>
       <div className="max-w-6xl mx-auto px-2">about page</div>
