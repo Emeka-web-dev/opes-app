@@ -45,9 +45,9 @@ export const Banner = () => {
         </div>
         <motion.div
           initial={{ y: -5, opacity: 0 }}
-          animate={{ scale: [0.6, 1.05, 0.98, 1], y: 0, opacity: 1 }}
+          animate={{ scale: [0.6, 1.04, 0.98, 1], y: 0, opacity: 1 }}
           transition={{
-            duration: 0.9,
+            duration: 1.2,
             delay: 0.7,
           }}
           viewport={{ once: true }}

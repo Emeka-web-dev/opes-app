@@ -2,14 +2,14 @@
 import { useModal } from "@/hooks/useModalStore";
 import { useScrollTop } from "@/hooks/useScrollTop";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
 import { Menu } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
 import { Button } from "../ui/button";
 import { NavigationRef } from "./navigation-ref";
-import Image from "next/image";
-import { motion } from "framer-motion";
 
 export const NavigationItems = ({ user }: any) => {
   const { onOpen } = useModal();

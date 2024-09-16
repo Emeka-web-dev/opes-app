@@ -2,26 +2,21 @@
 import { useModal } from "@/hooks/useModalStore";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
-import React from "react";
+import { usePathname } from "next/navigation";
 
 export const navItems = [
+  {
+    name: "Home",
+    ref: "/",
+  },
   {
     name: "About",
     ref: "/about",
   },
   {
-    name: "Terms of Use",
-    ref: "/terms-of-use",
-  },
-  {
     name: "Privacy Policy",
     ref: "/privacy-policy",
   },
-  // {
-  //   name: "Contact",
-  //   ref: "#contact",
-  // },
 ];
 export const NavigationRef = () => {
   const pathname = usePathname();
