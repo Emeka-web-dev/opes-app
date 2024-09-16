@@ -12,11 +12,16 @@ const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSessionStore((state) => state.session);
   const router = useRouter();
   useEffect(() => {
-    console.log("this is the user route");
     window.Tawk_API = window.Tawk_API || {};
-    //@ts-ignore
-    window.Tawk_API?.hideWidget();
-  }, []);
+    if (window.Tawk_API.hideWidget) {
+      window.Tawk_API?.hideWidget();
+    }
+    window.Tawk_API.onLoad = function () {
+      if (typeof window.Tawk_API?.hideWidget === "function") {
+        window.Tawk_API?.hideWidget();
+      }
+    };
+  }, [router]);
 
   if (session?.user && !session?.user?.isSubscribed) {
     return router.push("/");

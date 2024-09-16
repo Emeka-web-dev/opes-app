@@ -1,34 +1,3 @@
-// "use client";
-// import React, { useEffect } from "react";
-// import Intercom from "@intercom/messenger-js-sdk";
-
-// const IntercomMessenger = () => {
-//   useEffect(() => {
-//     // Check if window is defined (Client-side)
-//     if (typeof window !== "undefined") {
-//       Intercom({
-//         app_id: "dirutfql", // Replace with your Intercom app ID
-//         user_id: Math.random().toString(), // User's ID from your system
-//         name: "emeka", // User's name
-//         email: "emekarexchukwu@gmail.com", // User's email
-//         created_at: Math.floor(new Date().getTime() / 1000), // User's signup date as a Unix timestamp (seconds)
-//       });
-//     }
-
-//     // Optionally return a cleanup function to shut down Intercom on unmount
-//     return () => {
-//       if (typeof window.Intercom !== "undefined") {
-//         window.Intercom("shutdown");
-//       }
-//     };
-//   }, []);
-
-//   return <div></div>;
-// };
-
-// export default IntercomMessenger;
-
-// components/TawkToWidget.js
 "use client";
 
 import { useEffect } from "react";

@@ -29,21 +29,21 @@ export default async function RootLayout({
   const session = await auth();
   return (
     <html lang="en" suppressHydrationWarning>
-      <SessionProviders session={session}>
-        <Script
-          strategy="lazyOnload"
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}`}
-        ></Script>
-        <Script id="ga-script" strategy="lazyOnload">
-          {`
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.GOOGLE_ANALYTICS}`}
+      ></Script>
+      <Script id="ga-script" strategy="lazyOnload">
+        {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', '${process.env.GOOGLE_ANALYTICS}', {
-          page_path: window.location.pathname});
-          `}
-        </Script>
-        <body className={cn(inter.className, "scroll-smooth")}>
+            page_path: window.location.pathname});
+            `}
+      </Script>
+      <body className={cn(inter.className, "scroll-smooth")}>
+        <SessionProviders session={session}>
           <ThemeProvider
             attribute="class"
             defaultTheme="light"
@@ -57,8 +57,8 @@ export default async function RootLayout({
               {children}
             </QueryProvider>
           </ThemeProvider>
-        </body>
-      </SessionProviders>
+        </SessionProviders>
+      </body>
     </html>
   );
 }

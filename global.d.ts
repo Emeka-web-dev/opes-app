@@ -4,11 +4,8 @@ export {};
 declare global {
   interface Window {
     Tawk_API?: {
-      //   hideWidget: () => void;
-      //   endChat: () => void;
       shutdown?: () => void;
       onLoad?: () => void;
-      autoStart?: any;
       hideWidget?: () => void;
       showWidget?: () => void;
       popup?: () => void;
