@@ -45,14 +45,14 @@ const PrivacyPolicyPage = () => {
               </li>
               <li>
                 <span className="text-lg font-semibold">Company</span> (referred
-                to as either "the Company", "We", "Us" or "Our" in this
-                Agreement) refers to Opes International Limited, 89, Allen
-                Avenue, Ikeja, Lagos, Nigeria.
+                to as either the Company, We, Us or Our in this Agreement)
+                refers to Opes International Limited, 89, Allen Avenue, Ikeja,
+                Lagos, Nigeria.
               </li>
               <li>
                 <span className="text-lg font-semibold">Affiliate</span>means an
                 entity that controls, is controlled by or is under common
-                control with a party, where "control" means ownership of 50% or
+                control with a party, where control means ownership of 50% or
                 more of the shares, equity interest or other securities entitled
                 to vote for election of directors or other managing authority.
               </li>

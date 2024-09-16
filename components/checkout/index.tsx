@@ -1,3 +1,4 @@
+"use client";
 import { logout } from "@/actions/logout";
 import axios from "axios";
 import { useState } from "react";
