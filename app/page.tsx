@@ -23,11 +23,7 @@ export default function Home() {
       <section id="faq" className="bg-[#e4f2fe] dark:bg-[#030c21] ">
         <Faq />
       </section>
-
-      {/* <TawkToWidget /> */}
-      {/* <section id="contact">
-        <Contact />
-      </section> */}
+      {/* remove contact components */}
     </LayoutProvider>
   );
 }

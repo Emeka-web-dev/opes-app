@@ -9,6 +9,7 @@ import { NavbarDropDownMenu } from "../navbar-dropDownMenu";
 import { Button } from "../ui/button";
 import { NavigationRef } from "./navigation-ref";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export const NavigationItems = ({ user }: any) => {
   const { onOpen } = useModal();
@@ -24,7 +25,14 @@ export const NavigationItems = ({ user }: any) => {
         scrollTop && "shadow-md"
       )}
     >
-      <div className="px-4 flex items-center justify-between w-full max-w-7xl mx-auto">
+      <motion.div
+        initial={{ y: 0, opacity: 0 }}
+        animate={{ y: [-70, 5, 0], opacity: 1 }}
+        transition={{
+          duration: 1,
+        }}
+        className="px-4 flex items-center justify-between w-full max-w-7xl mx-auto"
+      >
         <Link href="/" className="relative w-16 h-14 md:w-[4.5rem] md:h-16">
           <Image
             src="/images/logo-image.png"
@@ -69,7 +77,7 @@ export const NavigationItems = ({ user }: any) => {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
     </header>
   );
 };

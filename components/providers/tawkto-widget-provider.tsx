@@ -41,7 +41,6 @@ const TawkToWidget = () => {
     tawkScript.charset = "UTF-8";
     tawkScript.setAttribute("crossorigin", "*");
     document.body.appendChild(tawkScript);
-    // window.Tawk_API?.shutdown();
 
     return () => {
       document.body.removeChild(tawkScript);

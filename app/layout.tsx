@@ -9,6 +9,7 @@ import { Rubik } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import "./globals.css";
+import TawkToWidget from "@/components/providers/tawkto-widget-provider";
 
 const inter = Rubik({
   weight: ["300", "400", "700"],
@@ -51,6 +52,7 @@ export default async function RootLayout({
           >
             <QueryProvider>
               <Toaster className="z-50" position="top-center" duration={1000} />
+              <TawkToWidget />
               <ModalProvider />
               {children}
             </QueryProvider>

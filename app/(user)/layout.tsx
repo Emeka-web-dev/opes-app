@@ -2,15 +2,22 @@
 
 import { Footer } from "@/components/footer";
 import { Navbar } from "@/components/navbar";
+import { useRouter } from "next/navigation";
 import { Sidebar } from "@/components/sidebar";
 import { useSessionStore } from "@/hooks/useSessionStore";
-import { useRouter } from "next/navigation";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 const UserLayout = ({ children }: { children: React.ReactNode }) => {
   const session = useSessionStore((state) => state.session);
   const router = useRouter();
+  useEffect(() => {
+    console.log("this is the user route");
+    window.Tawk_API = window.Tawk_API || {};
+    //@ts-ignore
+    window.Tawk_API?.hideWidget();
+  }, []);
+
   if (session?.user && !session?.user?.isSubscribed) {
     return router.push("/");
   }

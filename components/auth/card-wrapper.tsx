@@ -22,7 +22,7 @@ export const CardWrapper = ({
   backButtonLabel,
 }: Props) => {
   return (
-    <Card className="w-[400px] shadow-md font-sans">
+    <Card className="w-[400px] shadow-md">
       <CardHeader>
         <Header label={headerLabel} />
       </CardHeader>

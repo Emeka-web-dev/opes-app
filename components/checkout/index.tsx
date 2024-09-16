@@ -1,4 +1,3 @@
-"use client";
 import { logout } from "@/actions/logout";
 import axios from "axios";
 import { useState } from "react";
@@ -41,11 +40,8 @@ export function Checkout({ user }: CheckoutProps) {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col pt-[3.5rem]">
       <NavigationItems user={user} />
-      <Button onClick={signOut} className="w-fit pt-20">
-        signout
-      </Button>
       <Button onClick={onClick} className="w-fit" disabled={isLoading}>
         Payment
       </Button>
