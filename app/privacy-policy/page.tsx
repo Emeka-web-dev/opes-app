@@ -4,7 +4,7 @@ import React from "react";
 const PrivacyPolicyPage = () => {
   return (
     <LayoutProvider>
-      <div className="max-w-[50rem] mx-auto p-2 flex flex-col gap-y-2">
+      <div className="max-w-[50rem] mx-auto px-3 py-6 flex flex-col gap-y-2">
         <div className="flex flex-col gap-y-1">
           <h2 className="text-3xl font-semibold">Privacy policy</h2>
           <p>
