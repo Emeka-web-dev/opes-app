@@ -16,7 +16,7 @@ export const LayoutProvider = ({ children }: { children: ReactNode }) => {
     <main className="h-screen flex flex-col">
       <div className="flex-1">
         <NavigationItems user={user?.user} />
-        <div className="pt-[4.5rem]">{children}</div>
+        <div className="pt-[4.5rem] h-full">{children}</div>
       </div>
       <LayoutFooter />
     </main>

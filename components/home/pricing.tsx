@@ -1,4 +1,3 @@
-import React from "react";
 import { ContainerLayout } from "./container-layout";
 import { PricingContainer } from "./pricing-container";
 import Image from "next/image";

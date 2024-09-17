@@ -35,7 +35,7 @@ const DashboardPage = () => {
     return <DashboardSkeleton />;
   }
   if (status === "error") {
-    return <div>Pending</div>;
+    return <div>Error</div>;
   }
 
   return (

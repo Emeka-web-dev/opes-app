@@ -91,6 +91,8 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       ? "/admin/dashboard"
       : !!existingUser.payment
       ? "/dashboard"
+      : !!existingUser.paymentPlan
+      ? "/checkout"
       : "/";
     await signIn("credentials", {
       email,
